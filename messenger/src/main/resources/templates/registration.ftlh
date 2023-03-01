@@ -2,7 +2,9 @@
 <#import "parts/auth.ftlh" as l>
 
 <@c.page>
-    Add new user
+    <div class="mb-2">
+        <h5>Add new user</h5>
+    </div>
     ${message!}
-    <@l.auth "/registration" />
+    <@l.auth "/registration" true/>
 </@c.page>

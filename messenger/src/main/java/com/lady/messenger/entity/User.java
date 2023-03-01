@@ -17,6 +17,14 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
 
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
+    }
+
+    public boolean isUser() {
+        return roles.contains(Role.USER);
+    }
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
