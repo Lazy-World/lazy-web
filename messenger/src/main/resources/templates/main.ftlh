@@ -17,13 +17,13 @@
     <div class="collapse" id="collapseExample">
         <div class="form-group">
             <form method="post" enctype="multipart/form-data" class="my-2">
-                <div class="form-group">
+                <div class="form-group mb-1">
                     <input type="text" class="form-control" name="text" placeholder="Введите сообщение" />
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-1">
                     <input type="text" class="form-control" name="tag" placeholder="Тэг">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-1">
                     <div class="custom-file">
                         <input type="file" name="file" id="customFile">
                         <label class="custom-file-label" for="customFile">Choose file</label>
