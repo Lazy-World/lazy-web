@@ -1,12 +1,18 @@
 package com.lady.messenger.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Message {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+
+    @NotBlank(message = "Please fill the message")
+    @Length(max = 2048, message = "Your message is too long...")
     private String text;
     private String tag;
 

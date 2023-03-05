@@ -14,30 +14,39 @@
     <a class="btn btn-primary my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Add new Message
     </a>
-    <div class="collapse" id="collapseExample">
-        <div class="form-group">
-            <form method="post" enctype="multipart/form-data" class="my-2">
-                <div class="form-group mb-1">
-                    <input type="text" class="form-control" name="text" placeholder="Введите сообщение" />
-                </div>
-                <div class="form-group mb-1">
-                    <input type="text" class="form-control" name="tag" placeholder="Тэг">
-                </div>
-                <div class="form-group mb-1">
-                    <div class="custom-file">
-                        <input type="file" name="file" id="customFile">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+    <div class="collapse show" id="collapseExample">
+        <form method="post" enctype="multipart/form-data" class="col-md-4 needs-validation">
+            <div class="col mb-1">
+                <input type="text" name="text" class="form-control ${((errorMap['textError'])??)?string('is-invalid', '')}" id="validationCustom01" value="<#if message??>${message.text}</#if>" placeholder="Введите сообщение">
+                <#if (errorMap['textError'])??>
+                    <div class="invalid-feedback">
+                        ${(errorMap['textError'])!''}
                     </div>
-                </div>
-                <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Добавить</button>
-                </div>
-            </form>
-        </div>
+                </#if>
+            </div>
+
+            <div class="col mb-1">
+                <input type="text" name="tag" class="form-control ${((errorMap['tagError'])??)?string('is-invalid', '')}" value="<#if message??>${message.tag}</#if>" placeholder="Тэг">
+                <#if (errorMap['tagError'])??>
+                    <div class="invalid-feedback">
+                        ${(errorMap['tagError'])!''}
+                    </div>
+                </#if>
+            </div>
+
+            <div class="col mb-2">
+                <input type="file" name="file" class="form-control" aria-label="file example">
+                <div class="invalid-feedback">Example invalid form file feedback</div>
+            </div>
+
+            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+            <div class="mb-2">
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </div>
+        </form>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         <#list messages as message>
             <div class="col">
                 <div class="card">
@@ -45,8 +54,8 @@
                         <img src="/img/${message.filename}" class="card-img-top">
                     </#if>
                     <div class="m-2">
-                        <span>${message.text}</span>
-                        <i>${message.tag}</i>
+                        <span>${message.text}</span><br>
+                        <i>#${message.tag}</i>
                     </div>
                     <div class="card-footer text-muted">
                         ${message.authorName}
