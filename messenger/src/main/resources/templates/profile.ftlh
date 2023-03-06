@@ -5,6 +5,7 @@
         <h4>Welcome, ${username}!</h4>
     </div>
 
+    ${message!}
     <form method="post">
         <div class="mb-2 row">
             <label for="inputEmail" class="col-lg- col-form-label">Email :</label>

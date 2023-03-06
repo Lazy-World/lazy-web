@@ -31,10 +31,10 @@
                 <label for="inputPassword2" class="col-lg- col-form-label">Password :</label>
                 <div class="col-sm-5">
                     <input type="password" name="password2"
-                           class="form-control ${(passwordError??)?string('is-invalid', '')}" id="inputPassword2" placeholder="Password">
-                    <#if passwordError??>
+                           class="form-control ${(password2Error??)?string('is-invalid', '')}" id="inputPassword2" placeholder="Password">
+                    <#if password2Error??>
                         <div class="invalid-feedback">
-                            ${passwordError!''}
+                            ${password2Error!''}
                         </div>
                     </#if>
                 </div>

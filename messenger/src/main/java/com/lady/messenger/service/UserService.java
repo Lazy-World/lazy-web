@@ -120,14 +120,13 @@ public class UserService implements UserDetailsService {
         }
 
         if (StringUtils.hasLength(password)) {
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
         }
 
         userRepository.save(user);
 
         if (isEmailChanged) {
             sendMessage(user);
-
         }
     }
 }
