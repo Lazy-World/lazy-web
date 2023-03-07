@@ -2,7 +2,7 @@
 <#import "parts/auth.ftlh" as l>
 
 <@c.page>
-    <div class="mb-2">
+    <div class="mb-2 text-center">
         <h5>Add new user</h5>
     </div>
     ${message!}
