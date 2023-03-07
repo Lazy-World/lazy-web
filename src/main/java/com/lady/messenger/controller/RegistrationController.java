@@ -2,6 +2,7 @@ package com.lady.messenger.controller;
 
 import com.lady.messenger.entity.User;
 import com.lady.messenger.service.UserService;
+import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
