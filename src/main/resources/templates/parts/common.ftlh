@@ -13,7 +13,7 @@
 
     <body data-bs-theme="dark">
         <#include "navbar.ftlh">
-        <div class="container-fluid mt-2">
+        <div class="container-fluid mt-3">
             <#nested>
         </div>
 

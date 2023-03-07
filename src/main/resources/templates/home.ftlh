@@ -41,7 +41,7 @@
         </div>
     </#if>
 
-    <div class="row row-cols-md-1 ">
+    <div class="row row-cols-md-1">
         <#list messages as message>
             <div class="col">
                 <div class="card mx-auto mb-3" style="max-width: 540px;">
