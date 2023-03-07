@@ -21,8 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
+    protected void configure(HttpSecurity httpPageAccess) throws Exception {
+        httpPageAccess
                 .authorizeRequests()
                     .antMatchers("/", "/registration", "/static/**", "/activate/*", "/img/**").permitAll()
                     .anyRequest().authenticated()

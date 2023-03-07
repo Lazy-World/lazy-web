@@ -22,7 +22,7 @@ public class RegistrationController {
     private UserService userService;
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registrationPage() {
         return "registration";
     }
 
@@ -60,7 +60,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/activate/{code}")
-    public String activate(Model model, @PathVariable String code) {
+    public String activateUser(Model model, @PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {

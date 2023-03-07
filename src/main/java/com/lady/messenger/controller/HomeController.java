@@ -31,12 +31,12 @@ public class HomeController {
     private String uploadPath;
 
     @GetMapping("/messages")
-    public String greeting(Map<String, Object> model) {
+    public String getMessagePage(Map<String, Object> model) {
         return "messages";
     }
 
     @GetMapping("/")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+    public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Message> messages;
 
         if (filter != null && !filter.isEmpty()) {
@@ -52,13 +52,11 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String add(
-            @AuthenticationPrincipal User user,
-            @Valid Message message,
+    public String addPost(@AuthenticationPrincipal User user, @Valid Message message,
             BindingResult bindingResult,
             Model model,
-            @RequestParam("file") MultipartFile file
-    ) throws IOException {
+            @RequestParam("file") MultipartFile file) throws IOException
+    {
         message.setAuthor(user);
 
         model.addAttribute("errorMap", null);
