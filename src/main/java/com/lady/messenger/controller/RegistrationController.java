@@ -70,7 +70,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        if (!userService.addUser(user)) {
+        if (!userService.createUser(user)) {
             model.addAttribute("message", "User exists!");
             return "registration";
         }
