@@ -1,3 +1,5 @@
+<#import "captcha.ftlh" as c>
+
 <#macro auth path isRegisterForm>
     <form action="${path}" method="post">
         <div class="mb-2 row text-center">
@@ -28,13 +30,13 @@
 
         <#if isRegisterForm>
             <div class="mb-2 row text-center">
-                <label for="inputPassword2" class="col-lg- col-form-label">Password :</label>
+                <label for="inputPassword2" class="col-lg- col-form-label">Confirm password :</label>
                 <div class="col-sm-3 mx-auto">
                     <input type="password" name="password2"
-                           class="form-control ${(password2Error??)?string('is-invalid', '')}" id="inputPassword2" placeholder="Password">
-                    <#if password2Error??>
+                           class="form-control ${((errorMap['password2Error'])??)?string('is-invalid', '')}" id="inputPassword2" placeholder="Confirm your password">
+                    <#if (errorMap['password2Error'])??>
                         <div class="invalid-feedback">
-                            ${password2Error!''}
+                            ${(errorMap['password2Error'])!''}
                         </div>
                     </#if>
                 </div>
@@ -55,11 +57,11 @@
 
             <div class="mb-2 row">
                 <div class="col-sm-3 mx-auto mt-2">
-                    <div class="g-recaptcha" data-theme="dark" data-sitekey="6Ld1St4kAAAAAN5e8X1KldAch-Z_2bXxIW7nU3Ae"></div>
+                    <@c.captcha "${recaptchaSiteKey}"/>
 
-                    <#if recaptchaError??>
+                    <#if (errorMap['recaptchaError'])??>
                         <div class="alert alert-danger mt-2" role="alert">
-                            ${recaptchaError!''}
+                            ${(errorMap['recaptchaError'])!''}
                         </div>
                     </#if>
                 </div>

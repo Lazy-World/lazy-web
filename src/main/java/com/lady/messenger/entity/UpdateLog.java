@@ -6,13 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class Message {
+public class UpdateLog {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Please fill the message")
-    @Length(max = 2048, message = "Your message is too long...")
+    @NotBlank(message = "Please fill the text")
+    @Length(max = 2048, message = "Your update log is too long...")
     private String text;
     private String tag;
 
@@ -22,10 +22,10 @@ public class Message {
 
     private String filename;
 
-    public Message() {
+    public UpdateLog() {
     }
 
-    public Message(String text, String tag, User user) {
+    public UpdateLog(String text, String tag, User user) {
         this.author = user;
         this.text = text;
         this.tag = tag;

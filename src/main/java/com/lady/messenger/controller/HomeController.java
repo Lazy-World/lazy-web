@@ -1,8 +1,9 @@
 package com.lady.messenger.controller;
 
-import com.lady.messenger.entity.Message;
+import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.entity.User;
-import com.lady.messenger.repository.MessageRepository;
+import com.lady.messenger.repository.UpdateLogRepository;
+import com.lady.messenger.service.FeatureService;
 import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 
 @Controller
 public class HomeController {
     @Autowired
-    private MessageRepository messageRepository;
+    private UpdateLogRepository updateLogRepository;
+
+    @Autowired
+    private FeatureService featureService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -37,55 +38,35 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Message> messages;
+        Iterable<UpdateLog> updateLogs = featureService.getUpdateLogs(filter);
 
-        if (filter != null && !filter.isEmpty()) {
-            messages = messageRepository.findByTag(filter);
-        } else {
-            messages = messageRepository.findAll();
-        }
-
-        model.addAttribute("messages", messages);
+        model.addAttribute("updateLogs", updateLogs);
         model.addAttribute("filter", filter);
 
         return "home";
     }
 
     @PostMapping("/")
-    public String addPost(@AuthenticationPrincipal User user, @Valid Message message,
-            BindingResult bindingResult,
-            Model model,
-            @RequestParam("file") MultipartFile file) throws IOException
-    {
-        message.setAuthor(user);
+    public String addNewPost(@AuthenticationPrincipal User user, @Valid UpdateLog updateLog,
+            BindingResult bindingResult, Model model,
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
+        updateLog.setAuthor(user);
 
         model.addAttribute("errorMap", null);
         model.addAttribute("message", null);
 
         if (bindingResult.hasErrors()) {
-            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
 
-            model.addAttribute("errorMap", errorsMap);
-            model.addAttribute("message", message);
+            model.addAttribute("errorMap", errorMap);
+            model.addAttribute("message", updateLog);
         } else {
-            if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
-                File uploadDir = new File(uploadPath);
-
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdir();
-                }
-
-                String uuidFile = UUID.randomUUID().toString();
-                String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-                file.transferTo(new File(uploadPath + "/" + resultFilename));
-
-                message.setFilename(resultFilename);
-            }
-            messageRepository.save(message);
+            featureService.uploadFile(updateLog, uploadPath, file);
+            updateLogRepository.save(updateLog);
         }
 
-        Iterable<Message> messages = messageRepository.findAll();
+        Iterable<UpdateLog> messages = updateLogRepository.findAll();
         model.addAttribute("messages", messages);
 
         return "redirect:/";
