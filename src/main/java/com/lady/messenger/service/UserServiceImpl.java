@@ -3,6 +3,7 @@ package com.lady.messenger.service;
 import com.lady.messenger.entity.Role;
 import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.UserRepository;
+import com.lady.messenger.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private MailSenderService mailSenderService;
 
@@ -24,23 +25,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
-    private void sendEmailToUser(User user) {
-        if (!StringUtils.hasLength(user.getEmail())) {
-            // TODO: Send exception to front-end
-            return;
-        }
-
-        String message = String.format(
-                "Hello, %s \n" +
-                        "Welcome to Lazy World. \n\n" +
-                        "Please, visit next link to activate your account: http://localhost:8081/activate/%s",
-                user.getUsername(),
-                user.getActivationCode()
-        );
-
-        mailSenderService.send(user.getEmail(), "Activation code", message);
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,10 +37,12 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    @Override
     public boolean createUser(User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
 
@@ -76,6 +62,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    @Override
     public boolean activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
 
@@ -91,6 +78,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    @Override
     public void saveUser(User user, String username, Map<String, String> form) {
         user.setUsername(username);
 
@@ -109,6 +97,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    @Override
     public void updateUserInfo(User user, String password, String email) {
         String userEmail = user.getEmail();
 
@@ -132,5 +121,23 @@ public class UserService implements UserDetailsService {
         if (isEmailChanged) {
             sendEmailToUser(user);
         }
+    }
+
+    @Override
+    public void sendEmailToUser(User user) {
+        if (!StringUtils.hasLength(user.getEmail())) {
+            // TODO: Send exception to front-end
+            return;
+        }
+
+        String message = String.format(
+                "Hello, %s \n" +
+                        "Welcome to Lazy World. \n\n" +
+                        "Please, visit next link to activate your account: http://localhost:8081/activate/%s",
+                user.getUsername(),
+                user.getActivationCode()
+        );
+
+        mailSenderService.send(user.getEmail(), "Activation code", message);
     }
 }

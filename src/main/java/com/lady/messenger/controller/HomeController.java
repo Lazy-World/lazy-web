@@ -3,7 +3,7 @@ package com.lady.messenger.controller;
 import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.UpdateLogRepository;
-import com.lady.messenger.service.FeatureService;
+import com.lady.messenger.service.interfaces.FeatureService;
 import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

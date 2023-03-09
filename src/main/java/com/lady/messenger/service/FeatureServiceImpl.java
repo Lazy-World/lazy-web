@@ -3,6 +3,7 @@ package com.lady.messenger.service;
 import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.entity.dto.CaptchaResponseDto;
 import com.lady.messenger.repository.UpdateLogRepository;
+import com.lady.messenger.service.interfaces.FeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,12 +17,19 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class FeatureService {
+public class FeatureServiceImpl implements FeatureService {
     @Autowired
     private UpdateLogRepository updateLogRepository;
 
     @Autowired
     private RestTemplate restTemplate;
+
+    public String getFilenameWithUUID(MultipartFile file) {
+        String uuidFile = UUID.randomUUID().toString();
+        String originalFilename = file.getOriginalFilename();
+
+        return uuidFile + "." + originalFilename;
+    }
 
     public boolean isFieldEmpty(String field) {
         return (field == null || field.isEmpty());
@@ -40,22 +48,15 @@ public class FeatureService {
         return curValue != null && !curValue.equals(newValue);
     }
 
-    public String getFilenameWithUUID(MultipartFile file) {
-        String uuidFile = UUID.randomUUID().toString();
-        String originalFilename = file.getOriginalFilename();
-
-        return uuidFile + "." + originalFilename;
-    }
-
     // TODO: should return errors / error codes
     public void uploadFile(UpdateLog updateLog, String uploadPath, MultipartFile file) throws IOException {
         if (!isFileValid(file)) {
             return;
         }
 
-        boolean dirCreated = new File(uploadPath).mkdirs();
-        if (!dirCreated) {
-            return;
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
         }
 
         String resultFilename = getFilenameWithUUID(file);
