@@ -2,6 +2,7 @@
 <#import "parts/security.ftlh" as s>
 
 <@c.page>
+<#--    new-->
     <#if s.isAdmin>
         <div class="text-center">
             <a class="btn btn-light my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
