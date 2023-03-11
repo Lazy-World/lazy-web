@@ -8,6 +8,12 @@
         </div>
     </div>
 
+    <#list users as user>
+        <div class="my-3">
+            <a class="nav-link" href="?sel=${user.getId()}">${user.username}</a>
+        </div>
+    </#list>
+
     <div class="row row-cols-md-1">
         <#list messages as message>
             <div class="col">
