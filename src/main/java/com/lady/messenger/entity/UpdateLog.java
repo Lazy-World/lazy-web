@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "update_log")
 public class UpdateLog {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -22,8 +23,7 @@ public class UpdateLog {
 
     private String filename;
 
-    public UpdateLog() {
-    }
+    public UpdateLog() { }
 
     public UpdateLog(String text, String tag, User user) {
         this.author = user;

@@ -31,11 +31,6 @@ public class HomeController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping("/messages")
-    public String getMessagePage(Map<String, Object> model) {
-        return "messages";
-    }
-
     @GetMapping("/")
     public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<UpdateLog> updateLogs = featureService.getUpdateLogs(filter);

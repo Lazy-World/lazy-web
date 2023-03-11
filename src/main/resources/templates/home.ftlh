@@ -47,16 +47,17 @@
                 <div class="card mx-auto mb-3" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="/img/${updateLog.filename}" class="img-fluid rounded-start" alt="script preview">
+                            <img src="/img/${updateLog.getFilename()}" class="img-fluid rounded-start" alt="script preview">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">${updateLog.tag}</h5>
-                                <p class="card-text">${updateLog.text}</p>
+                                <h5 class="card-title">${updateLog.getTag()}</h5>
+                                <p class="card-text">${updateLog.getText()}</p>
                             </div>
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">Posted by <b>${updateLog.authorName}</b></small>
+                            <button type="button" class="btn btn-outline-secondary">Edit</button>
                         </div>
                     </div>
                 </div>
