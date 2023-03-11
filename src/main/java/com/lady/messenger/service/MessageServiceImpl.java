@@ -15,6 +15,6 @@ public class MessageServiceImpl implements MessageService {
     public Iterable<Message> getMessagesByChatId(Long chatId) {
         return chatId != null && chatId > 0
                 ? messageRepository.findMessagesByChatId(chatId)
-                : messageRepository.findAll();
+                : null;
     }
 }

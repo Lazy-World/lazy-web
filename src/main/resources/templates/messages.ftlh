@@ -41,24 +41,29 @@
     </#list>
 
     <div class="row row-cols-md-1">
-        <#list messages as message>
-            <div class="col">
-                <div class="card mx-auto mb-3" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <p class="card-text">${message.getText()}</p>
+        <#if messages??>
+            <#list messages as message>
+                <div class="col">
+                    <div class="card mx-auto mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <p class="card-text">${message.getText()}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">Posted by <b>${message.getAuthorName()}</b></small>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
+                            <div class="card-footer">
+                                <small class="text-muted">Posted by <b>${message.getAuthorName()}</b></small>
+                                <button type="button" class="btn btn-outline-secondary">Edit</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <#else>
+                No messages yet
+            </#list>
+
         <#else>
-            No messages yet
-        </#list>
+            Chat not opened
+        </#if>
     </div>
 </@c.page>
