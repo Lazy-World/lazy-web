@@ -68,7 +68,7 @@ public class UpdateLog {
     }
 
     public String getFilename() {
-        return filename;
+        return filename != null ? filename : "<none>";
     }
 
     public void setFilename(String filename) {
