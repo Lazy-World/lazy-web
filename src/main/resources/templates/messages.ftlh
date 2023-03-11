@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as c>
+<#import "parts/security.ftlh" as s>
 
 <@c.page>
     <div class="input-group mb-3" xmlns="http://www.w3.org/1999/html">
@@ -7,6 +8,31 @@
             <input type="text" class="form-control col-sm-3" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
         </div>
     </div>
+
+    <#if s.isUser>
+        <div class="text-center">
+            <a class="btn btn-light my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                New Message
+            </a>
+        </div>
+        <div class="collapse" id="collapseExample">
+            <form method="post" enctype="multipart/form-data" class="col-md-3 mx-auto needs-validation">
+                <div class="col mb-1">
+                    <textarea type="text" name="text" class="form-control ${((errorMap['textError'])??)?string('is-invalid', '')}" id="validationCustom01" value="<#if myMessage??>${myMessage.text}</#if>" placeholder="Message"></textarea>
+                    <#if (errorMap['textError'])??>
+                        <div class="invalid-feedback">
+                            ${(errorMap['textError'])!''}
+                        </div>
+                    </#if>
+                </div>
+
+                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                <div class="mb-2">
+                    <button class="btn btn-success" type="submit">Send</button>
+                </div>
+            </form>
+        </div>
+    </#if>
 
     <#list users as user>
         <div class="my-3">
