@@ -5,20 +5,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-public interface FeatureService {
+public interface HomeService {
     boolean isFieldEmpty(String field);
 
     boolean isFileValid(MultipartFile file);
 
-    boolean isCaptchaValid(String captchaUrl);
+    Iterable<UpdateLog> reverseUpdateLog(Iterable<UpdateLog> updateLog);
 
-    boolean hasChanged(String curValue, String newValue);
+    Iterable<UpdateLog> getUpdateLogs(String searchField);
 
     String getFilenameWithUUID(MultipartFile file);
 
     void uploadFile(UpdateLog updateLog, String uploadPath, MultipartFile file) throws IOException;
-
-    Iterable<UpdateLog> reverseUpdateLog(Iterable<UpdateLog> updateLog);
-
-    Iterable<UpdateLog> getUpdateLogs(String searchField);
 }

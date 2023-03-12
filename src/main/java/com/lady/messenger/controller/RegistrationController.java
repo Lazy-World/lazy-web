@@ -1,7 +1,7 @@
 package com.lady.messenger.controller;
 
 import com.lady.messenger.entity.User;
-import com.lady.messenger.service.interfaces.FeatureService;
+import com.lady.messenger.service.interfaces.RegistrationService;
 import com.lady.messenger.service.interfaces.UserService;
 import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class RegistrationController {
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     @Autowired
-    private FeatureService featureService;
+    private RegistrationService registrationService;
 
     @Autowired
     private UserService userService;
@@ -52,15 +52,15 @@ public class RegistrationController {
 
         model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
 
-        if (featureService.isFieldEmpty(passwordConfirm)) {
+        if (registrationService.isFieldEmpty(passwordConfirm)) {
             errorMap.put("password2Error", "Password confirmation cannot be empty");
         }
 
-        if (featureService.hasChanged(user.getPassword(), passwordConfirm)) {
+        if (registrationService.hasChanged(user.getPassword(), passwordConfirm)) {
             errorMap.put("passwordError", "Passwords are different!");
         }
 
-        if (!featureService.isCaptchaValid(captchaUrl)) {
+        if (!registrationService.isCaptchaValid(captchaUrl)) {
             errorMap.put("recaptchaError", "Captcha can not be empty!");
         }
 

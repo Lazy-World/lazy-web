@@ -3,7 +3,7 @@ package com.lady.messenger.controller;
 import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.UpdateLogRepository;
-import com.lady.messenger.service.interfaces.FeatureService;
+import com.lady.messenger.service.interfaces.HomeService;
 import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,19 +26,14 @@ public class HomeController {
     private UpdateLogRepository updateLogRepository;
 
     @Autowired
-    private FeatureService featureService;
+    private HomeService homeService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping("/messages")
-    public String getMessagePage(Map<String, Object> model) {
-        return "messages";
-    }
-
     @GetMapping("/")
     public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<UpdateLog> updateLogs = featureService.getUpdateLogs(filter);
+        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(filter);
 
         model.addAttribute("updateLogs", updateLogs);
         model.addAttribute("filter", filter);
@@ -62,7 +57,7 @@ public class HomeController {
             model.addAttribute("errorMap", errorMap);
             model.addAttribute("message", updateLog);
         } else {
-            featureService.uploadFile(updateLog, uploadPath, file);
+            homeService.uploadFile(updateLog, uploadPath, file);
             updateLogRepository.save(updateLog);
         }
 
