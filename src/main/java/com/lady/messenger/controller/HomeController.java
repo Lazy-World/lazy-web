@@ -41,29 +41,66 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/edit")
+    public String editUpdateLog(@RequestParam(value = "log") Long selectedId, Model model
+    ) {
+        UpdateLog currentLog = homeService.getUpdateLogById(selectedId);
+        model.addAttribute("currentLog", currentLog);
+
+        return "updateLogEdit";
+    }
+
     @PostMapping("/")
-    public String addNewPost(@AuthenticationPrincipal User user, @Valid UpdateLog updateLog,
+    public String addUpdateLog(@AuthenticationPrincipal User user, @Valid UpdateLog updateLog,
             BindingResult bindingResult, Model model,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
         updateLog.setAuthor(user);
 
         model.addAttribute("errorMap", null);
-        model.addAttribute("message", null);
+        model.addAttribute("updateLog", null);
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
 
             model.addAttribute("errorMap", errorMap);
-            model.addAttribute("message", updateLog);
+            model.addAttribute("updateLog", updateLog);
         } else {
             homeService.uploadFile(updateLog, uploadPath, file);
             updateLogRepository.save(updateLog);
         }
 
-        Iterable<UpdateLog> messages = updateLogRepository.findAll();
-        model.addAttribute("messages", messages);
+        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(null);
+        model.addAttribute("updateLogs", updateLogs);
 
         return "redirect:/";
+    }
+
+    @PostMapping("/edit")
+    public String saveUpdateLog(@Valid UpdateLog currentLog, BindingResult bindingResult, Model model,
+             @RequestParam(value = "log") Long selectedId,
+             @RequestParam(value = "file") MultipartFile file
+    ) {
+        UpdateLog selectedLog = homeService.getUpdateLogById(selectedId);
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
+
+            model.addAttribute("errorMap", errorMap);
+            model.addAttribute("currentLog", currentLog);
+        } else {
+            selectedLog.setTag(currentLog.getTag());
+            selectedLog.setText(currentLog.getText());
+            selectedLog.setFilename(selectedLog.getFilename());
+
+            System.out.println(currentLog.getFilename());
+
+            updateLogRepository.save(selectedLog);
+        }
+
+        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(null);
+        model.addAttribute("updateLogs", updateLogs);
+
+        return "redirect:/edit?log=" + selectedId;
     }
 }
