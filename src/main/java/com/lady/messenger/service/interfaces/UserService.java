@@ -1,12 +1,16 @@
 package com.lady.messenger.service.interfaces;
 
+import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface UserService {
     List<User> findAll();
+
+    Set<Message> getUserMessages(Long userId);
 
     boolean createUser(User user);
 
