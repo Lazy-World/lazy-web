@@ -1,8 +1,9 @@
 package com.lady.messenger.controller;
 
-import com.lady.messenger.entity.Message;
+import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.entity.User;
-import com.lady.messenger.repository.MessageRepository;
+import com.lady.messenger.repository.UpdateLogRepository;
+import com.lady.messenger.service.interfaces.HomeService;
 import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,78 +17,90 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 
 @Controller
 public class HomeController {
     @Autowired
-    private MessageRepository messageRepository;
+    private UpdateLogRepository updateLogRepository;
+
+    @Autowired
+    private HomeService homeService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping("/messages")
-    public String getMessagePage(Map<String, Object> model) {
-        return "messages";
-    }
-
     @GetMapping("/")
     public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Message> messages;
+        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(filter);
 
-        if (filter != null && !filter.isEmpty()) {
-            messages = messageRepository.findByTag(filter);
-        } else {
-            messages = messageRepository.findAll();
-        }
-
-        model.addAttribute("messages", messages);
+        model.addAttribute("updateLogs", updateLogs);
         model.addAttribute("filter", filter);
 
         return "home";
     }
 
+    @GetMapping("/edit")
+    public String editUpdateLog(@RequestParam(value = "log") Long selectedId, Model model
+    ) {
+        UpdateLog currentLog = homeService.getUpdateLogById(selectedId);
+        model.addAttribute("currentLog", currentLog);
+
+        return "updateLogEdit";
+    }
+
     @PostMapping("/")
-    public String addPost(@AuthenticationPrincipal User user, @Valid Message message,
-            BindingResult bindingResult,
-            Model model,
-            @RequestParam("file") MultipartFile file) throws IOException
-    {
-        message.setAuthor(user);
+    public String addUpdateLog(@AuthenticationPrincipal User user, @Valid UpdateLog updateLog,
+            BindingResult bindingResult, Model model,
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
+        updateLog.setAuthor(user);
 
         model.addAttribute("errorMap", null);
-        model.addAttribute("message", null);
+        model.addAttribute("updateLog", null);
 
         if (bindingResult.hasErrors()) {
-            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+            Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
 
-            model.addAttribute("errorMap", errorsMap);
-            model.addAttribute("message", message);
+            model.addAttribute("errorMap", errorMap);
+            model.addAttribute("updateLog", updateLog);
         } else {
-            if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
-                File uploadDir = new File(uploadPath);
-
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdir();
-                }
-
-                String uuidFile = UUID.randomUUID().toString();
-                String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-                file.transferTo(new File(uploadPath + "/" + resultFilename));
-
-                message.setFilename(resultFilename);
-            }
-            messageRepository.save(message);
+            homeService.uploadFile(updateLog, uploadPath, file);
+            updateLogRepository.save(updateLog);
         }
 
-        Iterable<Message> messages = messageRepository.findAll();
-        model.addAttribute("messages", messages);
+        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(null);
+        model.addAttribute("updateLogs", updateLogs);
 
         return "redirect:/";
+    }
+
+    @PostMapping("/edit")
+    public String saveUpdateLog(@Valid UpdateLog currentLog, BindingResult bindingResult, Model model,
+             @RequestParam(value = "log") Long selectedId,
+             @RequestParam(value = "file") MultipartFile file
+    ) {
+        UpdateLog selectedLog = homeService.getUpdateLogById(selectedId);
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
+
+            model.addAttribute("errorMap", errorMap);
+            model.addAttribute("currentLog", currentLog);
+        } else {
+            selectedLog.setTag(currentLog.getTag());
+            selectedLog.setText(currentLog.getText());
+            selectedLog.setFilename(selectedLog.getFilename());
+
+            System.out.println(currentLog.getFilename());
+
+            updateLogRepository.save(selectedLog);
+        }
+
+        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(null);
+        model.addAttribute("updateLogs", updateLogs);
+
+        return "redirect:/edit?log=" + selectedId;
     }
 }

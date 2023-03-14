@@ -2,7 +2,7 @@ package com.lady.messenger.controller;
 
 import com.lady.messenger.entity.Role;
 import com.lady.messenger.entity.User;
-import com.lady.messenger.service.UserService;
+import com.lady.messenger.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -60,7 +60,7 @@ public class UserController {
             @RequestParam String password,
             @RequestParam String email
     ) {
-        userService.updateProfile(user, password, email);
+        userService.updateUserInfo(user, password, email);
 
         return "redirect:/user/profile";
     }
