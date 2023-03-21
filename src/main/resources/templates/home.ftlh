@@ -23,7 +23,9 @@
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Posted by <b>${updateLog.authorName}</b></small>
-                        <a class="btn btn-outline-secondary"  href="/edit?log=${updateLog.getId()}">Edit</a>
+                        <#if s.isAdmin>
+                            <a class="btn btn-outline-secondary"  href="/edit?log=${updateLog.getId()}">Edit</a>
+                        </#if>
                     </div>
                 </div>
             </div>

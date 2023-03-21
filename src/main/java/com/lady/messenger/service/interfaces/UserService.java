@@ -1,5 +1,6 @@
 package com.lady.messenger.service.interfaces;
 
+import com.lady.messenger.entity.Chat;
 import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.User;
 
@@ -10,7 +11,9 @@ import java.util.Set;
 public interface UserService {
     List<User> findAll();
 
-    Set<Message> getUserMessages(Long userId);
+    Chat getChatWithUsers(User user1, User user2);
+
+    boolean existsChatWithUsers(User user1, User user2);
 
     boolean createUser(User user);
 

@@ -1,4 +1,4 @@
-package com.lady.messenger.entity.dto;
+package com.lady.messenger.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

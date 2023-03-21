@@ -1,8 +1,10 @@
 package com.lady.messenger.service;
 
+import com.lady.messenger.entity.Chat;
 import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.Role;
 import com.lady.messenger.entity.User;
+import com.lady.messenger.repository.ChatRepository;
 import com.lady.messenger.repository.UserRepository;
 import com.lady.messenger.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Transactional
     public Set<Message> getUserMessages(Long userId) {
@@ -71,6 +75,34 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         sendEmailToUser(user);
 
         return true;
+    }
+
+    @Override
+    public boolean existsChatWithUsers(User user1, User user2) {
+        boolean firstTry = chatRepository.existsChatByUser1AndUser2(user1, user2);
+        boolean secondTry = chatRepository.existsChatByUser1AndUser2(user2, user1);
+
+        return firstTry || secondTry;
+    }
+
+    @Override
+    public Chat getChatWithUsers(User user1, User user2) {
+        boolean firstTry = chatRepository.existsChatByUser1AndUser2(user1, user2);
+        boolean secondTry = chatRepository.existsChatByUser1AndUser2(user2, user1);
+
+        if (firstTry && secondTry) {
+            throw new RuntimeException("Duplicate chat found");
+        }
+
+        if (firstTry) {
+            return chatRepository.findChatByUser1AndUser2(user1, user2);
+        }
+
+        if (secondTry) {
+            return chatRepository.findChatByUser1AndUser2(user2, user1);
+        }
+
+        return new Chat(user1, user2);
     }
 
     @Override

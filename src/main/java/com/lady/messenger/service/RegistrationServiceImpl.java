@@ -1,6 +1,6 @@
 package com.lady.messenger.service;
 
-import com.lady.messenger.entity.dto.CaptchaResponseDto;
+import com.lady.messenger.dto.CaptchaResponseDto;
 import com.lady.messenger.service.interfaces.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

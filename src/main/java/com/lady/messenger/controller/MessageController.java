@@ -1,25 +1,24 @@
 package com.lady.messenger.controller;
 
+import com.lady.messenger.entity.Chat;
 import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.User;
+import com.lady.messenger.repository.ChatRepository;
 import com.lady.messenger.repository.MessageRepository;
+import com.lady.messenger.repository.UserRepository;
 import com.lady.messenger.service.interfaces.MessageService;
 import com.lady.messenger.service.interfaces.UserService;
-import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Controller
 public class MessageController {
@@ -29,49 +28,45 @@ public class MessageController {
     private UserService userService;
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ChatRepository chatRepository;
 
     @GetMapping("/messages")
     public String getChatMessages(
             @AuthenticationPrincipal User currentUser,
-            @RequestParam(value = "sel", required = false) Long selectedId, Model model
+            @RequestParam(value = "sel", required = false) Long selectedId,
+            Model model
     ) {
-        Iterable<Message> messages = messageService.getMessagesByChatId(selectedId);
+        User user2 = userRepository.findUserById(selectedId);
 
-        Set<Message> userMessages = userService.getUserMessages(currentUser.getId());
-        for (Message message : userMessages) {
-            System.out.printf("\n\nFrom: %s\nTo: %s\ntext: %s",
-                    message.getAuthor().getUsername(), message.getChatId(), message.getText()
-            );
+        if (userService.existsChatWithUsers(currentUser, user2)) {
+            Chat chat = userService.getChatWithUsers(currentUser, user2);
+            model.addAttribute("messages", chat.getMessageList());
         }
 
-        model.addAttribute("users", userService.findAll());
-        model.addAttribute("messages", messages);
+        model.addAttribute("users", userRepository.findAll());
 
         return "messages";
     }
 
     @PostMapping("/messages")
-    public String addNewPost(@AuthenticationPrincipal User user, @Valid Message message,
+    public String addNewPost(@AuthenticationPrincipal User currentUser, @Valid Message message,
              @RequestParam(value = "sel") Long selectedId,
              BindingResult bindingResult, Model model
     ) {
-        message.setAuthor(user);
-        message.setChatId(selectedId);
+        User user2 = userRepository.findUserById(selectedId);
+        Chat chat = userService.getChatWithUsers(currentUser, user2);
 
-        model.addAttribute("errorMap", null);
-        model.addAttribute("myMessage", null);
+        message.setAuthor(currentUser);
+        message.setMessageDateTime(LocalDateTime.now());
+        message.setChat(chat);
 
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
+        chatRepository.save(chat);
+        messageRepository.save(message);
 
-            model.addAttribute("errorMap", errorMap);
-            model.addAttribute("myMessage", message);
-        } else {
-            messageRepository.save(message);
-        }
-
-        Iterable<Message> messages = messageRepository.findMessagesByChatId(selectedId);
-        model.addAttribute("messages", messages);
+        System.out.println("catt");
 
         return "redirect:/messages?sel=" + selectedId;
     }
