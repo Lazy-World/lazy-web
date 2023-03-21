@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Controller
 public class MessageController {
@@ -39,11 +40,17 @@ public class MessageController {
             @RequestParam(value = "sel", required = false) Long selectedId,
             Model model
     ) {
-        User user2 = userRepository.findUserById(selectedId);
+        if (selectedId != null) {
+            User user2 = userRepository.findUserById(selectedId);
 
-        if (userService.existsChatWithUsers(currentUser, user2)) {
-            Chat chat = userService.getChatWithUsers(currentUser, user2);
-            model.addAttribute("messages", chat.getMessageList());
+            List<User> userSet = new ArrayList<>();
+            userSet.add(user2);
+            userSet.add(currentUser);
+
+            if (userService.existsChatWithUsers(userSet)) {
+                Chat chat = userService.getChatWithUsers(userSet);
+                model.addAttribute("messages", chat.getMessageList());
+            }
         }
 
         model.addAttribute("users", userRepository.findAll());
@@ -57,7 +64,12 @@ public class MessageController {
              BindingResult bindingResult, Model model
     ) {
         User user2 = userRepository.findUserById(selectedId);
-        Chat chat = userService.getChatWithUsers(currentUser, user2);
+
+        List<User> userSet = new ArrayList<>();
+        userSet.add(user2);
+        userSet.add(currentUser);
+
+        Chat chat = userService.getChatWithUsers(userSet);
 
         message.setAuthor(currentUser);
         message.setMessageDateTime(LocalDateTime.now());

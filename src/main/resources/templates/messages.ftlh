@@ -2,9 +2,6 @@
 <#import "parts/security.ftlh" as s>
 
 <@c.page>
-<#--    <div class="my-10 mx-20">-->
-<#--        <h1>Work in progress</h1>-->
-<#--    </div>-->
     <div class="input-group mb-3" xmlns="http://www.w3.org/1999/html">
         <span class="input-group-text" id="basic-addon1">@</span>
         <div class="col-sm-2">

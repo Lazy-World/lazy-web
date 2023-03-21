@@ -1,7 +1,6 @@
 package com.lady.messenger.service;
 
 import com.lady.messenger.entity.Chat;
-import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.Role;
 import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.ChatRepository;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -31,15 +29,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private UserRepository userRepository;
     @Autowired
     private ChatRepository chatRepository;
-
-    @Transactional
-    public Set<Message> getUserMessages(Long userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
-            return user.getMessages();
-        }
-        return null;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -78,31 +67,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public boolean existsChatWithUsers(User user1, User user2) {
-        boolean firstTry = chatRepository.existsChatByUser1AndUser2(user1, user2);
-        boolean secondTry = chatRepository.existsChatByUser1AndUser2(user2, user1);
-
-        return firstTry || secondTry;
+    public boolean existsChatWithUsers(List<User> users) {
+        return chatRepository.existsByUsers(users, (long) users.size());
     }
 
     @Override
-    public Chat getChatWithUsers(User user1, User user2) {
-        boolean firstTry = chatRepository.existsChatByUser1AndUser2(user1, user2);
-        boolean secondTry = chatRepository.existsChatByUser1AndUser2(user2, user1);
-
-        if (firstTry && secondTry) {
-            throw new RuntimeException("Duplicate chat found");
+    public Chat getChatWithUsers(List<User> users) {
+        if (existsChatWithUsers(users)) {
+            return chatRepository.findByUsers(users, (long) users.size());
         }
 
-        if (firstTry) {
-            return chatRepository.findChatByUser1AndUser2(user1, user2);
-        }
-
-        if (secondTry) {
-            return chatRepository.findChatByUser1AndUser2(user2, user1);
-        }
-
-        return new Chat(user1, user2);
+        return new Chat(users);
     }
 
     @Override

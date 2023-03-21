@@ -1,9 +1,7 @@
 package com.lady.messenger.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "chat")
@@ -12,13 +10,13 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user1_id")
-    private User user1;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user2_id")
-    private User user2;
+    @ManyToMany
+    @JoinTable(
+            name = "chat_users",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Message> messageList;
@@ -26,14 +24,14 @@ public class Chat {
     public Chat() {
         List<Message> emptyMessageList = Collections.emptyList();
         this.messageList = new ArrayList<>(emptyMessageList);
+        users = new ArrayList<>();
     }
 
-    public Chat(User user1, User user2) {
+    public Chat(List<User> users) {
         List<Message> emptyMessageList = Collections.emptyList();
         this.messageList = new ArrayList<>(emptyMessageList);
 
-        this.user1 = user1;
-        this.user2 = user2;
+        this.users = users;
     }
 
     public Long getId() {
@@ -44,24 +42,12 @@ public class Chat {
         this.id = id;
     }
 
-    public User getUser1() {
-        return user1;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser1(User user1) {
-        this.user1 = user1;
-    }
-
-    public User getUser2() {
-        return user2;
-    }
-
-    public void setUser2(User user2) {
-        this.user2 = user2;
-    }
-
-    public List<User> getUserList() {
-        return List.of(this.user1, this.user2);
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public List<Message> getMessageList() {

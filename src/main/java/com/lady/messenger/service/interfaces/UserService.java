@@ -11,9 +11,9 @@ import java.util.Set;
 public interface UserService {
     List<User> findAll();
 
-    Chat getChatWithUsers(User user1, User user2);
+    Chat getChatWithUsers(List<User> users);
 
-    boolean existsChatWithUsers(User user1, User user2);
+    boolean existsChatWithUsers(List<User> users);
 
     boolean createUser(User user);
 
