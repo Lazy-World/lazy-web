@@ -1,8 +1,10 @@
 package com.lady.messenger.service;
 
+import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.repository.UpdateLogRepository;
 import com.lady.messenger.service.interfaces.HomeService;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,6 +43,12 @@ public class HomeServiceImpl implements HomeService {
                 : updateLogRepository.findByTag(searchField);
 
         return reverseUpdateLog(updateLogs);
+    }
+
+    public UpdateLog getUpdateLogById(Long id) {
+        return id != null && id > 0
+                ? updateLogRepository.findUpdateLogById(id)
+                : null;
     }
 
     public String getFilenameWithUUID(MultipartFile file) {

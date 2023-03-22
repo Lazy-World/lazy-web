@@ -14,6 +14,8 @@ public interface HomeService {
 
     Iterable<UpdateLog> getUpdateLogs(String searchField);
 
+    UpdateLog getUpdateLogById(Long id);
+
     String getFilenameWithUUID(MultipartFile file);
 
     void uploadFile(UpdateLog updateLog, String uploadPath, MultipartFile file) throws IOException;

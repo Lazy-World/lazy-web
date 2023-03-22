@@ -5,8 +5,11 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
+@Table(name = "message")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +23,12 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
 
-    private long chatId;
+    @JoinColumn(name = "message_datetime")
+    private LocalDateTime messageDateTime;
+
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
 
     public Message() { }
 
@@ -52,11 +60,25 @@ public class Message {
         this.author = author;
     }
 
-    public long getChatId() {
-        return chatId;
+    public LocalDateTime getMessageDateTime() {
+        return messageDateTime;
     }
 
-    public void setChatId(long chatId) {
-        this.chatId = chatId;
+    public String getMessageDateTimeString() {
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
+        return messageDateTime.format(myFormatObj);
     }
+
+    public void setMessageDateTime(LocalDateTime messageDateTime) {
+        this.messageDateTime = messageDateTime;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
+
 }

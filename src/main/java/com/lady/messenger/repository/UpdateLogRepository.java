@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface UpdateLogRepository extends CrudRepository<UpdateLog, Long> {
     List<UpdateLog> findByTag(String tag);
+
+    UpdateLog findUpdateLogById(Long id);
 }
