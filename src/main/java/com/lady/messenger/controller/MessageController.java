@@ -8,6 +8,7 @@ import com.lady.messenger.repository.MessageRepository;
 import com.lady.messenger.repository.UserRepository;
 import com.lady.messenger.service.interfaces.MessageService;
 import com.lady.messenger.service.interfaces.UserService;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -30,8 +31,6 @@ public class MessageController {
     @Autowired
     private MessageRepository messageRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ChatRepository chatRepository;
 
     @GetMapping("/messages")
@@ -40,20 +39,17 @@ public class MessageController {
             @RequestParam(value = "sel", required = false) Long selectedId,
             Model model
     ) {
-        if (selectedId != null) {
-            User user2 = userRepository.findUserById(selectedId);
+        model.addAttribute("users", userService.getAllUsers());
 
-            List<User> userSet = new ArrayList<>();
-            userSet.add(user2);
-            userSet.add(currentUser);
-
-            if (userService.existsChatWithUsers(userSet)) {
-                Chat chat = userService.getChatWithUsers(userSet);
-                model.addAttribute("messages", chat.getMessageList());
-            }
+        if (selectedId == null) {
+            return "messages";
         }
 
-        model.addAttribute("users", userRepository.findAll());
+        val secondUser = userService.getUserById(selectedId);
+        val chatMembers = Arrays.asList(currentUser, secondUser);
+        val chat = userService.getChatWithUsers(chatMembers);
+
+        model.addAttribute("messages", chat.getMessageList());
 
         return "messages";
     }
@@ -63,13 +59,13 @@ public class MessageController {
              @RequestParam(value = "sel") Long selectedId,
              BindingResult bindingResult, Model model
     ) {
-        User user2 = userRepository.findUserById(selectedId);
+        if (selectedId == null) {
+            return "redirect:/messages";
+        }
 
-        List<User> userSet = new ArrayList<>();
-        userSet.add(user2);
-        userSet.add(currentUser);
-
-        Chat chat = userService.getChatWithUsers(userSet);
+        val secondUser = userService.getUserById(selectedId);
+        val chatMembers = Arrays.asList(currentUser, secondUser);
+        val chat = userService.getChatWithUsers(chatMembers);
 
         message.setAuthor(currentUser);
         message.setMessageDateTime(LocalDateTime.now());
@@ -77,8 +73,6 @@ public class MessageController {
 
         chatRepository.save(chat);
         messageRepository.save(message);
-
-        System.out.println("catt");
 
         return "redirect:/messages?sel=" + selectedId;
     }
