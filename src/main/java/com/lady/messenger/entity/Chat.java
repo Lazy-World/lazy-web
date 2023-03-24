@@ -1,9 +1,14 @@
 package com.lady.messenger.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "chat")
 public class Chat {
     @Id
@@ -32,29 +37,5 @@ public class Chat {
         this.messageList = new ArrayList<>(emptyMessageList);
 
         this.users = users;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public List<Message> getMessageList() {
-        return messageList;
-    }
-
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
     }
 }

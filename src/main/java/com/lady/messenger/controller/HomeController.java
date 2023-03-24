@@ -5,6 +5,7 @@ import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.UpdateLogRepository;
 import com.lady.messenger.service.interfaces.HomeService;
 import com.lady.messenger.utils.ControllerUtils;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 
 @Controller
@@ -44,7 +46,7 @@ public class HomeController {
     @GetMapping("/edit")
     public String editUpdateLog(@RequestParam(value = "log") Long selectedId, Model model
     ) {
-        UpdateLog currentLog = homeService.getUpdateLogById(selectedId);
+        val currentLog = homeService.getUpdateLogById(selectedId);
         model.addAttribute("currentLog", currentLog);
 
         return "updateLogEdit";
@@ -70,7 +72,7 @@ public class HomeController {
             updateLogRepository.save(updateLog);
         }
 
-        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(null);
+        val updateLogs = homeService.getUpdateLogs(null);
         model.addAttribute("updateLogs", updateLogs);
 
         return "redirect:/";
