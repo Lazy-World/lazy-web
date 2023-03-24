@@ -1,6 +1,7 @@
 package com.lady.messenger.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,9 +13,10 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@Entity
 @Table(name = "user_info")
 public class User implements UserDetails {
     @Id

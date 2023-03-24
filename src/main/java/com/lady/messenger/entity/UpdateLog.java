@@ -1,15 +1,17 @@
 package com.lady.messenger.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
-@Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@Entity
 @Table(name = "update_log")
 public class UpdateLog {
     @Id
@@ -26,14 +28,6 @@ public class UpdateLog {
     private User author;
 
     private String filename = "<none>";
-
-    public UpdateLog() { }
-
-    public UpdateLog(String text, String tag, User user) {
-        this.author = user;
-        this.text = text;
-        this.tag = tag;
-    }
 
     public String getAuthorName() {
         return author != null ? author.getUsername() : "<none>";

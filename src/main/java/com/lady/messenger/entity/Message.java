@@ -1,6 +1,7 @@
 package com.lady.messenger.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
@@ -10,9 +11,10 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@Entity
 @Table(name = "message")
 public class Message {
     @Id
@@ -33,8 +35,6 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
-
-    public Message() { }
 
     public String getAuthorName() {
         return author != null ? author.getUsername() : "<none>";
