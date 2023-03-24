@@ -4,11 +4,14 @@ import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.repository.UpdateLogRepository;
 import com.lady.messenger.service.interfaces.HomeService;
+import lombok.val;
 import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -37,7 +40,7 @@ public class HomeServiceImpl implements HomeService {
         return list;
     }
 
-    public Iterable<UpdateLog> getUpdateLogs(String searchField) {
+    public Iterable<UpdateLog> getUpdateLogsWithFilter(String searchField) {
         Iterable<UpdateLog> updateLogs = isFieldEmpty(searchField)
                 ? updateLogRepository.findAll()
                 : updateLogRepository.findByTag(searchField);
@@ -45,10 +48,15 @@ public class HomeServiceImpl implements HomeService {
         return reverseUpdateLog(updateLogs);
     }
 
+    public Iterable<UpdateLog> getAllUpdateLogs() {
+        return reverseUpdateLog(updateLogRepository.findAll());
+    }
+
     public UpdateLog getUpdateLogById(Long id) {
-        return id != null && id > 0
-                ? updateLogRepository.findUpdateLogById(id)
-                : null;
+        if (id <= 0) {
+            throw new RuntimeException("Invalid id was received");
+        }
+        return updateLogRepository.findUpdateLogById(id);
     }
 
     public String getFilenameWithUUID(MultipartFile file) {
@@ -59,9 +67,9 @@ public class HomeServiceImpl implements HomeService {
     }
 
     // TODO: should return errors / error codes
-    public void uploadFile(UpdateLog updateLog, String uploadPath, MultipartFile file) throws IOException {
+    public void uploadFile(@Valid UpdateLog updateLog, String uploadPath, MultipartFile file) throws IOException {
         if (!isFileValid(file)) {
-            return;
+            throw new RuntimeException("Filename cannot be empty!");
         }
 
         File uploadDir = new File(uploadPath);
