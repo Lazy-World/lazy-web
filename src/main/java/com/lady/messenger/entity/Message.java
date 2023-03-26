@@ -1,12 +1,21 @@
 package com.lady.messenger.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
+@Table(name = "message")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,43 +29,19 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
 
-    private long chatId;
+    @JoinColumn(name = "message_datetime")
+    private LocalDateTime messageDateTime;
 
-    public Message() { }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
 
     public String getAuthorName() {
         return author != null ? author.getUsername() : "<none>";
     }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public long getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(long chatId) {
-        this.chatId = chatId;
+    public String getMessageDateTimeString() {
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
+        return messageDateTime.format(myFormatObj);
     }
 }

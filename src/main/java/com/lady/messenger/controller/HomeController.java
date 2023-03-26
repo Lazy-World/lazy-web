@@ -5,6 +5,7 @@ import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.UpdateLogRepository;
 import com.lady.messenger.service.interfaces.HomeService;
 import com.lady.messenger.utils.ControllerUtils;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 
 @Controller
@@ -33,19 +35,15 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(filter);
-
-        model.addAttribute("updateLogs", updateLogs);
+        model.addAttribute("updateLogs", homeService.getUpdateLogsWithFilter(filter));
         model.addAttribute("filter", filter);
 
         return "home";
     }
 
     @GetMapping("/edit")
-    public String editUpdateLog(@RequestParam(value = "log") Long selectedId, Model model
-    ) {
-        UpdateLog currentLog = homeService.getUpdateLogById(selectedId);
-        model.addAttribute("currentLog", currentLog);
+    public String editUpdateLog(@RequestParam(value = "log") Long selectedId, Model model) {
+        model.addAttribute("currentLog", homeService.getUpdateLogById(selectedId));
 
         return "updateLogEdit";
     }
@@ -57,11 +55,8 @@ public class HomeController {
     ) throws IOException {
         updateLog.setAuthor(user);
 
-        model.addAttribute("errorMap", null);
-        model.addAttribute("updateLog", null);
-
         if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
+            val errorMap = ControllerUtils.getErrorMap(bindingResult);
 
             model.addAttribute("errorMap", errorMap);
             model.addAttribute("updateLog", updateLog);
@@ -70,8 +65,7 @@ public class HomeController {
             updateLogRepository.save(updateLog);
         }
 
-        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(null);
-        model.addAttribute("updateLogs", updateLogs);
+        model.addAttribute("updateLogs", homeService.getAllUpdateLogs());
 
         return "redirect:/";
     }
@@ -84,7 +78,7 @@ public class HomeController {
         UpdateLog selectedLog = homeService.getUpdateLogById(selectedId);
 
         if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = ControllerUtils.getErrorMap(bindingResult);
+            val errorMap = ControllerUtils.getErrorMap(bindingResult);
 
             model.addAttribute("errorMap", errorMap);
             model.addAttribute("currentLog", currentLog);
@@ -93,13 +87,10 @@ public class HomeController {
             selectedLog.setText(currentLog.getText());
             selectedLog.setFilename(selectedLog.getFilename());
 
-            System.out.println(currentLog.getFilename());
-
             updateLogRepository.save(selectedLog);
         }
 
-        Iterable<UpdateLog> updateLogs = homeService.getUpdateLogs(null);
-        model.addAttribute("updateLogs", updateLogs);
+        model.addAttribute("updateLogs", homeService.getAllUpdateLogs());
 
         return "redirect:/edit?log=" + selectedId;
     }

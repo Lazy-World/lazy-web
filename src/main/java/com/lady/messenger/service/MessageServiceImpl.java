@@ -9,12 +9,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MessageServiceImpl implements MessageService {
-    @Autowired
-    private MessageRepository messageRepository;
 
-    public Iterable<Message> getMessagesByChatId(Long chatId) {
-        return chatId != null && chatId > 0
-                ? messageRepository.findMessagesByChatId(chatId)
-                : null;
-    }
 }

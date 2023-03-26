@@ -1,7 +1,9 @@
 package com.lady.messenger.service;
 
+import com.lady.messenger.entity.Chat;
 import com.lady.messenger.entity.Role;
 import com.lady.messenger.entity.User;
+import com.lady.messenger.repository.ChatRepository;
 import com.lady.messenger.repository.UserRepository;
 import com.lady.messenger.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,8 +42,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public List<User> findAll() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findUserById(id);
     }
 
     @Override
@@ -60,6 +69,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         sendEmailToUser(user);
 
         return true;
+    }
+
+    @Override
+    public boolean existsChatWithUsers(List<User> users) {
+        return chatRepository.existsByUsers(users, (long) users.size());
+    }
+
+    @Override
+    public Chat getChatWithUsers(List<User> users) {
+        if (existsChatWithUsers(users)) {
+            return chatRepository.findByUsers(users, (long) users.size());
+        }
+
+        return new Chat(users);
     }
 
     @Override

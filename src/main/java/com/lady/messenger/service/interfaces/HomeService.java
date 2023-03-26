@@ -12,7 +12,9 @@ public interface HomeService {
 
     Iterable<UpdateLog> reverseUpdateLog(Iterable<UpdateLog> updateLog);
 
-    Iterable<UpdateLog> getUpdateLogs(String searchField);
+    Iterable<UpdateLog> getUpdateLogsWithFilter(String searchField);
+
+    Iterable<UpdateLog> getAllUpdateLogs();
 
     UpdateLog getUpdateLogById(Long id);
 
