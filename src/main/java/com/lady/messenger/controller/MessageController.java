@@ -1,15 +1,11 @@
 package com.lady.messenger.controller;
 
-import com.lady.messenger.entity.Chat;
 import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.ChatRepository;
 import com.lady.messenger.repository.MessageRepository;
-import com.lady.messenger.repository.UserRepository;
-import com.lady.messenger.service.interfaces.MessageService;
 import com.lady.messenger.service.interfaces.UserService;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,18 +16,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
 
 @Controller
 public class MessageController {
-    @Autowired
-    private MessageService messageService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private MessageRepository messageRepository;
-    @Autowired
-    private ChatRepository chatRepository;
+    private final UserService userService;
+    private final MessageRepository messageRepository;
+    private final ChatRepository chatRepository;
+
+    public MessageController(UserService userService, MessageRepository messageRepository, ChatRepository chatRepository) {
+        this.userService = userService;
+        this.messageRepository = messageRepository;
+        this.chatRepository = chatRepository;
+    }
 
     @GetMapping("/messages")
     public String getChatMessages(

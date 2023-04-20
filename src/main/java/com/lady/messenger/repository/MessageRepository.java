@@ -7,8 +7,4 @@ import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
     List<Message> findMessagesByChatId(Long chatId);
-
-//    List<Message> findMessagesByChatId(Long chatId);
-
-//    List<Message> findMessagesByChat(Chat chat);
 }

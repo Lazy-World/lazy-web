@@ -2,7 +2,6 @@ package com.lady.messenger.service;
 
 import com.lady.messenger.dto.CaptchaResponseDto;
 import com.lady.messenger.service.interfaces.RegistrationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,8 +9,11 @@ import java.util.Collections;
 
 @Service(value = "RegistrationService")
 public class RegistrationServiceImpl implements RegistrationService {
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+
+    public RegistrationServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public boolean isFieldEmpty(String field) {
         return (field == null || field.isEmpty());

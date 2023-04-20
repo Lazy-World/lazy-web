@@ -6,7 +6,6 @@ import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.ChatRepository;
 import com.lady.messenger.repository.UserRepository;
 import com.lady.messenger.service.interfaces.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,16 +18,20 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserDetailsService, UserService {
-    @Autowired
-    private MailSenderService mailSenderService;
+    private final MailSenderService mailSenderService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ChatRepository chatRepository;
+    private final UserRepository userRepository;
+
+    private final ChatRepository chatRepository;
+
+    public UserServiceImpl(MailSenderService mailSenderService, PasswordEncoder passwordEncoder, UserRepository userRepository, ChatRepository chatRepository) {
+        this.mailSenderService = mailSenderService;
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.chatRepository = chatRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

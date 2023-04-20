@@ -4,7 +4,6 @@ import com.lady.messenger.entity.User;
 import com.lady.messenger.service.interfaces.RegistrationService;
 import com.lady.messenger.service.interfaces.UserService;
 import com.lady.messenger.utils.ControllerUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,17 +21,20 @@ import java.util.Map;
 public class RegistrationController {
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
-    @Autowired
-    private RegistrationService registrationService;
+    private final RegistrationService registrationService;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @Value("${recaptcha.site-key}")
     private String recaptchaSiteKey;
 
     @Value("${recaptcha.secret-key}")
     private String recaptchaSecretKey;
+
+    public RegistrationController(RegistrationService registrationService, UserService userService) {
+        this.registrationService = registrationService;
+        this.userService = userService;
+    }
 
     @GetMapping("/registration")
     public String registrationPage(Model model) {

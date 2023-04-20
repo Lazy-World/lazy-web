@@ -6,7 +6,6 @@ import com.lady.messenger.repository.UpdateLogRepository;
 import com.lady.messenger.service.interfaces.HomeService;
 import com.lady.messenger.utils.ControllerUtils;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,19 +18,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
 
 @Controller
 public class HomeController {
-    @Autowired
-    private UpdateLogRepository updateLogRepository;
+    private final UpdateLogRepository updateLogRepository;
 
-    @Autowired
-    private HomeService homeService;
+    private final  HomeService homeService;
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    public HomeController(UpdateLogRepository updateLogRepository, HomeService homeService) {
+        this.updateLogRepository = updateLogRepository;
+        this.homeService = homeService;
+    }
 
     @GetMapping("/")
     public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
