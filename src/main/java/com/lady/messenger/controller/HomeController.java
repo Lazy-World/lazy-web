@@ -23,7 +23,7 @@ import java.io.IOException;
 public class HomeController {
     private final UpdateLogRepository updateLogRepository;
 
-    private final  HomeService homeService;
+    private final HomeService homeService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -35,7 +35,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String getHomePage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        model.addAttribute("updateLogs", homeService.getUpdateLogsWithFilter(filter));
+        model.addAttribute("updateLogs", homeService.reverseUpdateLogList(
+                homeService.getUpdateLogsWithFilter(filter))
+        );
         model.addAttribute("filter", filter);
 
         return "home";
@@ -83,7 +85,7 @@ public class HomeController {
             model.addAttribute("errorMap", errorMap);
             model.addAttribute("currentLog", currentLog);
         } else {
-            selectedLog.setTag(currentLog.getTag());
+            selectedLog.setTitle(currentLog.getTitle());
             selectedLog.setText(currentLog.getText());
             selectedLog.setFilename(selectedLog.getFilename());
 

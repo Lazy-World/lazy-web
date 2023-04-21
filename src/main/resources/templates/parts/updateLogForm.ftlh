@@ -12,10 +12,10 @@
     <div class="collapse" id="collapseExample">
         <form method="post" enctype="multipart/form-data" class="col-md-3 mx-auto needs-validation">
             <div class="col mb-1">
-                <input type="text" name="tag" class="form-control ${((errorMap['tagError'])??)?string('is-invalid', '')}" value="<#if currentLog??>${currentLog.tag}</#if>" placeholder="Title">
-                <#if (errorMap['tagError'])??>
+                <input type="text" name="title" class="form-control ${((errorMap['titleError'])??)?string('is-invalid', '')}" value="<#if currentLog??>${currentLog.title}</#if>" placeholder="Title" />
+                <#if (errorMap['titleError'])??>
                     <div class="invalid-feedback">
-                        ${(errorMap['tagError'])!''}
+                        ${(errorMap['titleError'])!''}
                     </div>
                 </#if>
             </div>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="col mb-2">
-                <input type="file" name="file" class="form-control ${((errorMap['fileError'])??)?string('is-invalid', '')}" aria-label="file example">
+                <input type="file" name="file" class="form-control ${((errorMap['fileError'])??)?string('is-invalid', '')}" aria-label="file example" />
                 <div class="invalid-feedback">Example invalid form file feedback</div>
             </div>
 

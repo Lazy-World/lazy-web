@@ -9,14 +9,14 @@
         <div class="mb-2 row">
             <label for="inputEmail" class="col-lg- col-form-label">Email :</label>
             <div class="col-sm-5">
-                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="example@gmail.com" value="${email!''}">
+                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="example@gmail.com" value="${email!''}" />
             </div>
         </div>
 
         <div class="mb-2 row">
             <label for="inputPassword" class="col-lg- col-form-label">Password :</label>
             <div class="col-sm-5">
-                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" />
             </div>
         </div>
 

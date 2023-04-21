@@ -30,7 +30,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     // TODO: make a Template method instead
-    public Iterable<UpdateLog> reverseUpdateLog(Iterable<UpdateLog> updateLog) {
+    public Iterable<UpdateLog> reverseUpdateLogList(Iterable<UpdateLog> updateLog) {
         LinkedList<UpdateLog> list = new LinkedList<>();
         for (UpdateLog ul : updateLog) {
             list.addFirst(ul);
@@ -39,15 +39,13 @@ public class HomeServiceImpl implements HomeService {
     }
 
     public Iterable<UpdateLog> getUpdateLogsWithFilter(String searchField) {
-        Iterable<UpdateLog> updateLogs = isFieldEmpty(searchField)
+        return isFieldEmpty(searchField)
                 ? updateLogRepository.findAll()
-                : updateLogRepository.findByTag(searchField);
-
-        return reverseUpdateLog(updateLogs);
+                : updateLogRepository.findByTitle(searchField);
     }
 
     public Iterable<UpdateLog> getAllUpdateLogs() {
-        return reverseUpdateLog(updateLogRepository.findAll());
+        return reverseUpdateLogList(updateLogRepository.findAll());
     }
 
     public UpdateLog getUpdateLogById(Long id) {

@@ -5,7 +5,7 @@
     <div class="input-group mb-3" xmlns="http://www.w3.org/1999/html">
         <span class="input-group-text" id="basic-addon1">@</span>
         <div class="col-sm-2">
-            <input type="text" class="form-control col-sm-3" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" class="form-control col-sm-3" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
         </div>
     </div>
 
@@ -25,7 +25,7 @@
                         </div>
                     </#if>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
                         <label class="form-check-label" for="flexSwitchCheckChecked">Create new chat</label>
                     </div>
                 </div>

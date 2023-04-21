@@ -6,7 +6,7 @@
             <label for="inputLogin" class="col-lg- col-form-label">Login :</label>
             <div class="col-sm-3 mx-auto">
                 <input type="text" name="username" value="<#if user??>${user.username}</#if>"
-                       class="form-control ${((errorMap['usernameError'])??)?string('is-invalid', '')}" id="inputLogin" placeholder="User name">
+                       class="form-control ${((errorMap['usernameError'])??)?string('is-invalid', '')}" id="inputLogin" placeholder="User name" />
                 <#if (errorMap['usernameError'])??>
                     <div class="invalid-feedback">
                         ${(errorMap['usernameError'])!''}
@@ -19,7 +19,7 @@
             <label for="inputPassword" class="col-lg- col-form-label">Password :</label>
             <div class="col-sm-3 mx-auto">
                 <input type="password" name="password"
-                       class="form-control ${((errorMap['passwordError'])??)?string('is-invalid', '')}" id="inputPassword" placeholder="Password">
+                       class="form-control ${((errorMap['passwordError'])??)?string('is-invalid', '')}" id="inputPassword" placeholder="Password" />
                 <#if (errorMap['passwordError'])??>
                     <div class="invalid-feedback">
                         ${(errorMap['passwordError'])!''}
@@ -33,7 +33,7 @@
                 <label for="inputPassword2" class="col-lg- col-form-label">Confirm password :</label>
                 <div class="col-sm-3 mx-auto">
                     <input type="password" name="password2"
-                           class="form-control ${((errorMap['password2Error'])??)?string('is-invalid', '')}" id="inputPassword2" placeholder="Confirm your password">
+                           class="form-control ${((errorMap['password2Error'])??)?string('is-invalid', '')}" id="inputPassword2" placeholder="Confirm your password" />
                     <#if (errorMap['password2Error'])??>
                         <div class="invalid-feedback">
                             ${(errorMap['password2Error'])!''}
@@ -46,7 +46,7 @@
                 <label for="inputEmail" class="col-lg- col-form-label">Email :</label>
                 <div class="col-sm-3 mx-auto">
                     <input type="email" name="email" value="<#if user??>${user.email}</#if>"
-                           class="form-control ${((errorMap['emailError'])??)?string('is-invalid', '')}" id="inputEmail" placeholder="example@gmail.com">
+                           class="form-control ${((errorMap['emailError'])??)?string('is-invalid', '')}" id="inputEmail" placeholder="example@gmail.com" />
                     <#if (errorMap['emailError'])??>
                         <div class="invalid-feedback">
                             ${(errorMap['emailError'])!''}

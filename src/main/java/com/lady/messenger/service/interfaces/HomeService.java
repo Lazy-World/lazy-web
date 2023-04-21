@@ -10,7 +10,7 @@ public interface HomeService {
 
     boolean isFileValid(MultipartFile file);
 
-    Iterable<UpdateLog> reverseUpdateLog(Iterable<UpdateLog> updateLog);
+    Iterable<UpdateLog> reverseUpdateLogList(Iterable<UpdateLog> updateLog);
 
     Iterable<UpdateLog> getUpdateLogsWithFilter(String searchField);
 

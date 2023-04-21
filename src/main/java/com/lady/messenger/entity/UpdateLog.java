@@ -21,13 +21,21 @@ public class UpdateLog {
     @NotBlank(message = "Please fill the text")
     @Length(max = 2048, message = "Your update log is too long...")
     private String text;
-    private String tag;
+    private String title;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
 
     private String filename = "<none>";
+
+    public UpdateLog(String title, String text, User user)
+    {
+        this.title = title;
+        this.text = text;
+
+        this.author = user;
+    }
 
     public String getAuthorName() {
         return author != null ? author.getUsername() : "<none>";
