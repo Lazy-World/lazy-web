@@ -7,9 +7,9 @@
     <@updLog.updForm false/>
 </#if>
 
-<div class="row row-cols-md-1">
+<div class="row row-cols-md-1" id="update-log-list">
     <#list updateLogs as updateLog>
-        <div class="col">
+        <div class="col" data-id="${updateLog.getId()}">
             <div class="card mx-auto mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">

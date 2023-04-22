@@ -1,0 +1,1 @@
+DELETE FROM update_log;
