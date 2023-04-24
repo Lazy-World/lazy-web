@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    
+    <changeSet id="10" author="postgres">
+        <sqlFile
+                dbms="postgresql"
+                endDelimiter=";;"
+                splitStatements="true"
+                stripComments="true"
+                relativeToChangelogFile="true"
+                path="10-create-tables.sql"
+        />
+
+        <rollback>
+            <sqlFile dbms="postgresql"
+                     endDelimiter=";;"
+                     relativeToChangelogFile="true"
+                     splitStatements="true"
+                     stripComments="true"
+                     path="10-drop-tables.sql"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
