@@ -62,7 +62,6 @@ public class HomeServiceImpl implements HomeService {
         return uuidFile + "." + originalFilename;
     }
 
-    // TODO: should return errors / error codes
     public void uploadFile(@Valid UpdateLog updateLog, String uploadPath, MultipartFile file) throws IOException {
         if (!isFileValid(file)) {
             throw new RuntimeException("Filename cannot be empty!");
