@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: messenger-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: messenger
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 80
