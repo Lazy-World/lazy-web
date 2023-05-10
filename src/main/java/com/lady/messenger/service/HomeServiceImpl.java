@@ -29,7 +29,6 @@ public class HomeServiceImpl implements HomeService {
         return file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty();
     }
 
-    // TODO: make a Template method instead
     public Iterable<UpdateLog> reverseUpdateLogList(Iterable<UpdateLog> updateLog) {
         LinkedList<UpdateLog> list = new LinkedList<>();
         for (UpdateLog ul : updateLog) {
@@ -45,12 +44,12 @@ public class HomeServiceImpl implements HomeService {
     }
 
     public Iterable<UpdateLog> getAllUpdateLogs() {
-        return reverseUpdateLogList(updateLogRepository.findAll());
+        return updateLogRepository.findAll();
     }
 
     public UpdateLog getUpdateLogById(Long id) {
         if (id <= 0) {
-            throw new RuntimeException("Invalid id was received");
+            throw new IllegalArgumentException ("Invalid id was received");
         }
         return updateLogRepository.findUpdateLogById(id);
     }

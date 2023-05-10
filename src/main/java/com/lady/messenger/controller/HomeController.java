@@ -73,9 +73,8 @@ public class HomeController {
     }
 
     @PostMapping("/edit")
-    public String saveUpdateLog(@Valid UpdateLog currentLog, BindingResult bindingResult, Model model,
-             @RequestParam(value = "log") Long selectedId,
-             @RequestParam(value = "file") MultipartFile file
+    public String saveEditedUpdateLog(@Valid UpdateLog currentLog, BindingResult bindingResult, Model model,
+             @RequestParam(value = "log") Long selectedId
     ) {
         UpdateLog selectedLog = homeService.getUpdateLogById(selectedId);
 

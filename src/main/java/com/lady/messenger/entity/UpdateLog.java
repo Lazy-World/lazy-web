@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -29,8 +30,9 @@ public class UpdateLog {
 
     private String filename = "<none>";
 
-    public UpdateLog(String title, String text, User user)
+    public UpdateLog(Long id, String title, String text, User user)
     {
+        this.id = id;
         this.title = title;
         this.text = text;
 
@@ -39,5 +41,18 @@ public class UpdateLog {
 
     public String getAuthorName() {
         return author != null ? author.getUsername() : "<none>";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UpdateLog updateLog = (UpdateLog) o;
+        return id.equals(updateLog.id) && text.equals(updateLog.text) && title.equals(updateLog.title) && author.equals(updateLog.author) && Objects.equals(filename, updateLog.filename);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, text, title, author, filename);
     }
 }
