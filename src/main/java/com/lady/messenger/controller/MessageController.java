@@ -52,7 +52,7 @@ public class MessageController {
     }
 
     @PostMapping("/messages")
-    public String addNewPost(@AuthenticationPrincipal User currentUser, @Valid Message message,
+    public String addNewMessage(@AuthenticationPrincipal User currentUser, @Valid Message message,
              @RequestParam(value = "sel") Long selectedId,
              BindingResult bindingResult, Model model
     ) {

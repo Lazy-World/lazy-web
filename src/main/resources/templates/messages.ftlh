@@ -2,13 +2,6 @@
 <#import "parts/security.ftlh" as s>
 
 <@c.page>
-    <div class="input-group mb-3" xmlns="http://www.w3.org/1999/html">
-        <span class="input-group-text" id="basic-addon1">@</span>
-        <div class="col-sm-2">
-            <input type="text" class="form-control col-sm-3" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
-        </div>
-    </div>
-
     <#if s.isUser>
         <div class="text-center">
             <a class="btn btn-light my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -25,7 +18,7 @@
                         </div>
                     </#if>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked="checked" />
                         <label class="form-check-label" for="flexSwitchCheckChecked">Create new chat</label>
                     </div>
                 </div>
@@ -45,17 +38,17 @@
 <#--            </div>-->
 <#--        </#list>-->
 
-    <div class="col cols-md-2">
+    <div class="col cols-md-2" id="user-list">
         <#list users as user>
-            <div class="col my-3">
+            <div class="col my-3" data-id="${user.getId()}">
                 <a class="nav-link" href="?sel=${user.getId()}">${user.getUsername()}</a>
             </div>
         </#list>
 
-        <div class="row row-cols-md-1">
+        <div class="row row-cols-md-1" id="messages-history">
             <#if messages??>
                 <#list messages as message>
-                    <div class="col">
+                    <div class="col" data-id="${message.getId()}">
                         <div class="card mx-auto mb-3" style="max-width: 540px;">
                             <div class="row g-0">
                                 <div class="col-md-8">
@@ -64,7 +57,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">${message.getMessageDateTimeString()}<br>Posted by <b>${message.getAuthorName()}</b></small>
+                                    <small class="text-muted"><b>${message.getMessageDateTimeString()}</b> Posted by <b>${message.getAuthorName()}</b></small>
                                     <button type="button" class="btn btn-outline-secondary">Edit</button>
                                 </div>
                             </div>

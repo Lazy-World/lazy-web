@@ -3,6 +3,7 @@ package com.lady.messenger.service;
 import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.UpdateLogRepository;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,13 +18,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -129,7 +129,22 @@ public class HomeServiceImplTest {
     }
 
     @Test
-    public void testUploadFile() {
+    void testUploadFile() throws IOException {
+        UpdateLog updateLog = new UpdateLog();
+        String uploadPath   = "testUploadPath";
+        File uploadDir      = new File(uploadPath);
+        MultipartFile file  = mock(MultipartFile.class);
 
+        when(file.getOriginalFilename()).thenReturn("testFile.txt");
+        homeService.uploadFile(updateLog, uploadPath, file);
+
+        String filename = updateLog.getFilename();
+        assertTrue(filename.matches("[a-f0-9\\-]+\\.testFile\\.txt"));
+        assertTrue(uploadDir.exists());
+
+        if (uploadDir.exists()) {
+            FileUtils.deleteDirectory(uploadDir);
+        }
     }
+
 }

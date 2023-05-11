@@ -3,6 +3,7 @@ package com.lady.messenger.controller;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -12,6 +13,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import java.io.File;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
@@ -29,6 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @Value("upload.path")
+    private String uploadPath;
 
     @Test
     public void testHomePage() throws Exception {
@@ -55,10 +61,10 @@ public class HomeControllerTest {
 
     @Test
     public void testAddUpdateLogByAdmin() throws Exception {
-        MockMultipartFile file = new MockMultipartFile("file", "test.txt", "text/plain", "123".getBytes());
+        MockMultipartFile fileForUpdateLog = new MockMultipartFile("file", "unsafe_test.txt", "text/plain", "123".getBytes());
 
         MockHttpServletRequestBuilder multipart = multipart("/")
-                .file(file)
+                .file(fileForUpdateLog)
                 .param("text", "NEW CAT CREATED TEXT")
                 .param("title", "NEW CAT")
                 .with(csrf());
@@ -72,6 +78,15 @@ public class HomeControllerTest {
                 .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]").exists())
                 .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]/div/div/div[2]/div/p").string("NEW CAT CREATED TEXT"))
                 .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]/div/div/div[2]/div/h5").string("NEW CAT"));
+
+        File dir = new File("uploads");
+        File[] files = dir.listFiles();
+        assert files != null;
+        for (File file : files) {
+            if (file.getName().matches("^[a-f0-9\\-]+\\.unsafe_test\\.txt$")) {
+                file.delete();
+            }
+        }
     }
 
     @Test
