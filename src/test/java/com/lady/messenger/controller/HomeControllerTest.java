@@ -3,7 +3,6 @@ package com.lady.messenger.controller;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -32,9 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
-    @Value("upload.path")
-    private String uploadPath;
 
     @Test
     public void testHomePage() throws Exception {

@@ -36,9 +36,6 @@ public class HomeServiceImplTest {
     @InjectMocks
     private HomeServiceImpl homeService;
 
-    @Value("${upload.path}")
-    private String fileUploadPath;
-
     @Test
     public void testIsFieldEmpty() {
         assertTrue(homeService.isFieldEmpty(null), "Null was provided");

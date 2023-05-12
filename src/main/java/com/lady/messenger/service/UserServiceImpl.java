@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public User getUserById(Long id) {
         return userRepository.findUserById(id);
     }

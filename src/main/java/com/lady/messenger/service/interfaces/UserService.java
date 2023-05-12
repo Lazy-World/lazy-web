@@ -11,6 +11,8 @@ public interface UserService {
 
     User getUserById(Long id);
 
+    User getUserByUsername(String username);
+
     Chat getChatWithUsers(List<User> users);
 
     boolean existsChatWithUsers(List<User> users);
