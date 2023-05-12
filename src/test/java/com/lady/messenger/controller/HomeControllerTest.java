@@ -88,9 +88,9 @@ public class HomeControllerTest {
     @Test
     public void testEditExistingUpdateLog() throws Exception {
         MockHttpServletRequestBuilder multipart = multipart("/edit")
-                .param("log", "1")
-                .param("text", "FIRST TEXT (Edited)")
-                .param("title", "CAT1")
+                    .param("log", "1")
+                    .param("text", "FIRST TEXT (Edited)")
+                    .param("title", "CAT1")
                 .with(csrf());
 
         this.mockMvc.perform(multipart)

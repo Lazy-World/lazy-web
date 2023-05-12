@@ -157,7 +157,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public void sendEmailToUser(User user) {
         if (!StringUtils.hasLength(user.getEmail())) {
-            // TODO: Send exception to front-end
             return;
         }
 
