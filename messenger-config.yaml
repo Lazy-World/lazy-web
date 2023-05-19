@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: messenger-config
+data:
+  SERVER_PORT: "80"
+  SPRING_DATASOURCE_URL: jdbc:postgresql://172.17.0.2:5432/messenger
+  SPRING_DATASOURCE_USERNAME: postgres
+  SPRING_DATASOURCE_PASSWORD: root
+  SPRING_LIQUIBASE_CHANGE_LOG: classpath:db/changelog/changelog-master.xml
+  UPLOAD_PATH: /uploads
+  SPRING_MAIL_HOST: smtp.yandex.ru
+  SPRING_MAIL_PORT: "465"
+  SPRING_MAIL_USERNAME: lazy.test@yandex.ru
+  SPRING_MAIL_PASSWORD: jkuuzgnkqmqrpjzo
+  SPRING_MAIL_PROTOCOL: smtps
+  SPRING_MAIL_PROPERTIES_MAIL_TRANSPORT_PROTOCOL: smtps
+  SPRING_MAIL_PROPERTIES_MAIL_DEBUG: "true"
+  RECAPTCHA_SITE_KEY: 6Ld1St4kAAAAAN5e8X1KldAch-Z_2bXxIW7nU3Ae
+  RECAPTCHA_SECRET_KEY: 6Ld1St4kAAAAAOVxi3-ri9NPpvhCo9bc2n_loAJ5

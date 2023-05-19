@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         User user = userRepository.findByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("Пользователь не найден");
         }
 
         return user;
@@ -81,14 +81,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public boolean existsChatWithUsers(List<User> users) {
-        return chatRepository.existsByUsers(users, (long) users.size());
+        return chatRepository.existsByUsers(users, (long) users.size(), (long) new HashSet<>(users).size());
     }
 
     @Override
     public Chat getChatWithUsers(List<User> users) {
-        if (existsChatWithUsers(users)) {
-            return chatRepository.findByUsers(users, (long) users.size());
-        }
+        if (existsChatWithUsers(users))
+            return chatRepository.findByUsers(users, (long) users.size(), (long) new HashSet<>(users).size());
 
         return new Chat(users);
     }
@@ -161,13 +160,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         String message = String.format(
-                "Hello, %s \n" +
-                        "Welcome to Lazy World. \n\n" +
-                        "Please, visit next link to activate your account: http://localhost:8081/activate/%s",
+                "Приветствую, %s \n" +
+                        "Добро пожаловать в Lazy World. \n\n" +
+                        "Перейдите по ссылке для активации вашего аккаунта: http://localhost:8081/activate/%s",
                 user.getUsername(),
                 user.getActivationCode()
         );
 
-        mailSenderService.send(user.getEmail(), "Activation code", message);
+        mailSenderService.send(user.getEmail(), "Активация аккаунта", message);
     }
 }

@@ -1,3 +1,7 @@
 body {
     color: #113;
 }
+
+.card-text {
+    white-space: pre-line;
+}

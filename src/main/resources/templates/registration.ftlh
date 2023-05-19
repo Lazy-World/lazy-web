@@ -3,7 +3,7 @@
 
 <@c.page>
     <div class="mb-2 text-center">
-        <h5>Add new user</h5>
+        <h5>Создание аккаунта</h5>
     </div>
     ${message!}
     <@l.auth "/registration" true/>

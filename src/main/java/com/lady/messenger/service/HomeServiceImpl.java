@@ -63,7 +63,7 @@ public class HomeServiceImpl implements HomeService {
 
     public void uploadFile(@Valid UpdateLog updateLog, String uploadPath, MultipartFile file) throws IOException {
         if (!isFileValid(file)) {
-            throw new RuntimeException("Filename cannot be empty!");
+            return;
         }
 
         File uploadDir = new File(uploadPath);

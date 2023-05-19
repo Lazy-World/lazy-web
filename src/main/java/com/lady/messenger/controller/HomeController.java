@@ -51,23 +51,36 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String addUpdateLog(@AuthenticationPrincipal User user, @Valid UpdateLog updateLog,
+    public String addUpdateLog(@AuthenticationPrincipal User user, @Valid UpdateLog currentLog,
             BindingResult bindingResult, Model model,
+            @RequestParam(required = false, defaultValue = "") String filter,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
-        updateLog.setAuthor(user);
+        if (!homeService.isFileValid(file)) {
+            model.addAttribute("currentLog", currentLog);
+            model.addAttribute("fileError", "Пожалуйста, выберите файл");
+            model.addAttribute("updateLogs", homeService.reverseUpdateLogList(
+                    homeService.getUpdateLogsWithFilter(filter))
+            );
+
+            return "home";
+        }
+
+        currentLog.setAuthor(user);
 
         if (bindingResult.hasErrors()) {
             val errorMap = ControllerUtils.getErrorMap(bindingResult);
 
             model.addAttribute("errorMap", errorMap);
-            model.addAttribute("updateLog", updateLog);
+            model.addAttribute("updateLog", currentLog);
         } else {
-            homeService.uploadFile(updateLog, uploadPath, file);
-            updateLogRepository.save(updateLog);
+            homeService.uploadFile(currentLog, uploadPath, file);
+            updateLogRepository.save(currentLog);
         }
 
-        model.addAttribute("updateLogs", homeService.getAllUpdateLogs());
+        model.addAttribute("updateLogs", homeService.reverseUpdateLogList(
+                homeService.getUpdateLogsWithFilter(filter))
+        );
 
         return "redirect:/";
     }

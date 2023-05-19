@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -102,9 +103,7 @@ public class UserControllerTest {
         User testUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         testUser.setEmail("oldemail@example.com");
         testUser.setActivationCode("test_code");
-
         testUser.setEmail("oldemail@example.com");
-        testUser.setActivationCode("test_code");
 
         when(userRepository.findByUsername("dev")).thenReturn(testUser);
 

@@ -37,6 +37,7 @@ public class MessageController {
             Model model
     ) {
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("currentId", currentUser.getId());
 
         if (selectedId == null) {
             return "messages";

@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Posted by <b>${currentLog.authorName}</b></small>
+                    <small class="text-muted">Автор: <b>${currentLog.authorName}</b></small>
                 </div>
             </div>
         </div>

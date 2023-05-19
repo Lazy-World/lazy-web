@@ -33,7 +33,7 @@ public class MessageControllerTest {
     public void testGetChatMessages() throws Exception {
         this.mockMvc.perform(get("/messages"))
                 .andExpect(authenticated())
-                .andExpect(xpath("//div[@id='user-list']/div[@data-id=1]/a").string("dev"));
+                .andExpect(xpath("//div[@id='user-list']/div[@data-id=1]/a").string("Избранное"));
     }
 
     @Test

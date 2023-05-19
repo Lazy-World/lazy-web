@@ -13,7 +13,7 @@
             <div class="card mx-auto mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="/img/${updateLog.getFilename()}" class="img-fluid rounded-start" alt="script preview" />
+                        <img src="/img/${updateLog.getFilename()}" class="img-fluid rounded-start" alt="картинка" />
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -22,16 +22,16 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Posted by <b>${updateLog.authorName}</b></small>
+                        <small class="text-muted">Автор: <b>${updateLog.authorName}</b></small>
                         <#if s.isAdmin>
-                            <a class="btn btn-outline-secondary"  href="/edit?log=${updateLog.getId()}">Edit</a>
+                            <a class="btn btn-outline-secondary"  href="/edit?log=${updateLog.getId()}">Редактировать</a>
                         </#if>
                     </div>
                 </div>
             </div>
         </div>
     <#else>
-        No update logs yet
+        <div class="text-center">Новостей пока нет</div>
     </#list>
 </div>
 </@c.page>

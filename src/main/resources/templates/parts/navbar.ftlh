@@ -10,16 +10,16 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="navbar-nav me-auto mb-2 mb-lg-0">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-                <a class="nav-link" href="/messages">Messages</a>
+                <a class="nav-link active" aria-current="page" href="/">Главная</a>
+                <a class="nav-link" href="/messages">Сообщения</a>
                 <#if isAdmin>
-                    <a class="nav-link" href="/user">User List</a>
+                    <a class="nav-link" href="/user">Список пользователей</a>
                 </#if>
             </div>
 
             <form method="get" action="/" class="d-flex" role="search">
-                <input type="text" class="form-control me-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Search" />
-                <button class="btn btn-outline-success me-3" type="submit">Search</button>
+                <input type="text" class="form-control me-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Введите заголовок новости" />
+                <button class="btn btn-outline-success me-3" type="submit">Поиск</button>
             </form>
 
             <#if isUser>
@@ -27,12 +27,12 @@
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">${name}</button>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end">
-                            <li><a class="dropdown-item" href="/user/profile">Profile</a></li>
+                            <li><a class="dropdown-item" href="/user/profile">Профиль</a></li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
                                 <form action="/logout" method="post">
                                     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                                    <button type="submit" class="dropdown-item">Sign out</button>
+                                    <button type="submit" class="dropdown-item">Выход</button>
                                 </form>
                             </li>
                         </ul>
