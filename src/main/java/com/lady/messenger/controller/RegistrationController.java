@@ -58,7 +58,7 @@ public class RegistrationController {
             errorMap.put("password2Error", "Password confirmation cannot be empty");
         }
 
-        if (registrationService.hasChanged(user.getPassword(), passwordConfirm)) {
+        if (registrationService.hasStringChanged(user.getPassword(), passwordConfirm)) {
             errorMap.put("passwordError", "Passwords are different!");
         }
 

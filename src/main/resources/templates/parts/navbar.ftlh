@@ -18,7 +18,7 @@
             </div>
 
             <form method="get" action="/" class="d-flex" role="search">
-                <input type="text" class="form-control me-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Введите заголовок новости" />
+                <input type="text" class="form-control me-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Заголовок новости" />
                 <button class="btn btn-outline-success me-3" type="submit">Поиск</button>
             </form>
 

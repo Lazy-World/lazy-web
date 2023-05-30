@@ -5,3 +5,9 @@ body {
 .card-text {
     white-space: pre-line;
 }
+
+.carousel-image {
+    width: auto; /* Желаемая ширина */
+    height: 300px; /* Желаемая высота */
+    object-fit: none; /* Опционально: для сохранения пропорций и обрезки изображения */
+}

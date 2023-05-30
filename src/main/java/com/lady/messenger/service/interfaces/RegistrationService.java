@@ -5,5 +5,5 @@ public interface RegistrationService {
 
     boolean isCaptchaValid(String captchaUrl);
 
-    boolean hasChanged(String curValue, String newValue);
+    boolean hasStringChanged(String curValue, String newValue);
 }

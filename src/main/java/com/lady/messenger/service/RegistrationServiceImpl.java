@@ -24,7 +24,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         return captchaResponse != null && captchaResponse.isSuccess();
     }
 
-    public boolean hasChanged(String curValue, String newValue) {
+    public boolean hasStringChanged(String curValue, String newValue) {
         return curValue != null && !curValue.equals(newValue);
     }
 }
