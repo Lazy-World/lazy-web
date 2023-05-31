@@ -2,7 +2,7 @@
 
 <@c.page>
     <div class="mb-2">
-        <h4>Welcome, ${username}!</h4>
+        <h4>С возвращением, ${username}!</h4>
     </div>
 
     <form method="post">
@@ -23,7 +23,7 @@
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
 
         <div class="col-auto mt-3">
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
         </div>
     </form>
 </@c.page>

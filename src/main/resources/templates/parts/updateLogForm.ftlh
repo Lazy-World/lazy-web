@@ -1,6 +1,6 @@
 <#macro updForm isLogEdit>
     <div class="text-center">
-        <a class="btn btn-light my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <a class="btn btn-light my-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             <#if isLogEdit>
                 Редактировать новость
             <#else>

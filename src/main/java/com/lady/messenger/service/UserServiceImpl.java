@@ -160,9 +160,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         String message = String.format(
-                "Приветствую, %s \n" +
-                        "Добро пожаловать в Lazy World. \n\n" +
-                        "Перейдите по ссылке для активации вашего аккаунта: http://localhost:8081/activate/%s",
+                "Приветствую, %s!\n \n" +
+
+                "Добро пожаловать в Lazy World.\n" +
+                "Для подтверждения почты перейдите по ссылке:\n \n" +
+
+                "http://localhost:8081/activate/%s",
                 user.getUsername(),
                 user.getActivationCode()
         );

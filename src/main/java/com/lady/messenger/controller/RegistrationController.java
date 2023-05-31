@@ -55,15 +55,15 @@ public class RegistrationController {
         model.addAttribute("recaptchaSiteKey", recaptchaSiteKey);
 
         if (registrationService.isFieldEmpty(passwordConfirm)) {
-            errorMap.put("password2Error", "Password confirmation cannot be empty");
+            errorMap.put("password2Error", "Поле не может быть пустым");
         }
 
         if (registrationService.hasStringChanged(user.getPassword(), passwordConfirm)) {
-            errorMap.put("passwordError", "Passwords are different!");
+            errorMap.put("passwordError", "Пароли не совпадают");
         }
 
         if (!registrationService.isCaptchaValid(captchaUrl)) {
-            errorMap.put("recaptchaError", "Captcha can not be empty!");
+            errorMap.put("recaptchaError", "Что-то пошло не так");
         }
 
         if (bindingResult.hasErrors()) {
@@ -76,7 +76,7 @@ public class RegistrationController {
         }
 
         if (!userService.createUser(user)) {
-            model.addAttribute("message", "User exists!");
+            model.addAttribute("message", "Пользователь уже существует!");
             return "registration";
         }
 
@@ -89,10 +89,10 @@ public class RegistrationController {
 
         if (isActivated) {
             model.addAttribute("messageType", "success");
-            model.addAttribute("message", "User successfully activated");
+            model.addAttribute("message", "Пользователь успешно подтверждён!");
         } else {
             model.addAttribute("messageType", "danger");
-            model.addAttribute("message", "Activation code not found");
+            model.addAttribute("message", "Код активации не найден");
         }
 
         return "login";

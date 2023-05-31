@@ -2,31 +2,6 @@
 <#import "parts/security.ftlh" as s>
 
 <@c.page>
-    <#if s.isUser>
-        <div class="text-center">
-            <a class="btn btn-light my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Написать сообщение
-            </a>
-        </div>
-        <div class="collapse" id="collapseExample">
-            <form method="post" enctype="multipart/form-data" class="col-md-3 mx-auto needs-validation">
-                <div class="col mb-1">
-                    <textarea type="text" name="text" class="form-control ${((errorMap['textError'])??)?string('is-invalid', '')}" value="<#if myMessage??>${myMessage.text}</#if>" placeholder="Текст сообщения"></textarea>
-                    <#if (errorMap['textError'])??>
-                        <div class="invalid-feedback">
-                            ${(errorMap['textError'])!''}
-                        </div>
-                    </#if>
-                </div>
-
-                <input type="hidden" name="_csrf" value="${_csrf.token}" />
-                <div class="mb-2">
-                    <button class="btn btn-success" type="submit">Отправить</button>
-                </div>
-            </form>
-        </div>
-    </#if>
-
     <div class="col cols-md-2" id="user-list">
         <#list users as user>
             <div class="col my-3" data-id="${user.getId()}">
@@ -40,6 +15,31 @@
 
         <div class="row row-cols-md-1" id="messages-history">
             <#if messages??>
+                <#if s.isUser>
+                    <div class="text-center">
+                        <a class="btn btn-light my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            Написать сообщение
+                        </a>
+                    </div>
+                    <div class="collapse" id="collapseExample">
+                        <form method="post" enctype="multipart/form-data" class="col-md-3 mx-auto needs-validation">
+                            <div class="col mb-1">
+                                <textarea type="text" name="text" class="form-control ${((errorMap['textError'])??)?string('is-invalid', '')}" value="<#if myMessage??>${myMessage.text}</#if>" placeholder="Текст сообщения"></textarea>
+                                <#if (errorMap['textError'])??>
+                                    <div class="invalid-feedback">
+                                        ${(errorMap['textError'])!''}
+                                    </div>
+                                </#if>
+                            </div>
+
+                            <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                            <div class="mb-2">
+                                <button class="btn btn-success" type="submit">Отправить</button>
+                            </div>
+                        </form>
+                    </div>
+                </#if>
+
                 <#list messages as message>
                     <div class="col" data-id="${message.getId()}">
                         <div class="card mx-auto mb-3" style="max-width: 540px;">

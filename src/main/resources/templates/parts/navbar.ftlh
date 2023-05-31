@@ -3,7 +3,7 @@
 
 <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">Lazy</span>
+        <a class="navbar-brand" href="/">Lazy</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,8 +18,8 @@
             </div>
 
             <form method="get" action="/" class="d-flex" role="search">
-                <input type="text" class="form-control me-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Заголовок новости" />
-                <button class="btn btn-outline-success me-3" type="submit">Поиск</button>
+                <input type="text" class="form-control me-2 my-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Заголовок новости" />
+                <button class="btn btn-outline-success me-3 my-2" type="submit">Поиск</button>
             </form>
 
             <#if isUser>

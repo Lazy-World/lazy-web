@@ -5,9 +5,9 @@
         <table class="mx-auto">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Action</th>
+                <th>Логин</th>
+                <th>Роли</th>
+                <th>Действие</th>
             </tr>
             </thead>
 

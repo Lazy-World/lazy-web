@@ -34,10 +34,10 @@
     <@updLog.updForm false/>
 </#if>
 
-<div class="row row-cols-md-1" id="update-log-list">
+<div class="row row-cols-1 row-cols-md-1" id="update-log-list">
     <#list updateLogs as updateLog>
         <div class="col" data-id="${updateLog.getId()}">
-            <div class="card mx-auto mb-3" style="max-width: 540px;">
+            <div class="card mx-auto mb-4" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="/img/${updateLog.getFilename()}" class="img-fluid rounded-start" alt="картинка" />
