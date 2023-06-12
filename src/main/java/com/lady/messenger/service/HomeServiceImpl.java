@@ -3,6 +3,7 @@ package com.lady.messenger.service;
 import com.lady.messenger.entity.UpdateLog;
 import com.lady.messenger.repository.UpdateLogRepository;
 import com.lady.messenger.service.interfaces.HomeService;
+import com.lady.messenger.utils.ControllerUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,11 +31,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     public Iterable<UpdateLog> reverseUpdateLogList(Iterable<UpdateLog> updateLog) {
-        LinkedList<UpdateLog> list = new LinkedList<>();
-        for (UpdateLog ul : updateLog) {
-            list.addFirst(ul);
-        }
-        return list;
+        return ControllerUtils.reverseList(updateLog);
     }
 
     public Iterable<UpdateLog> getUpdateLogsWithFilter(String searchField) {

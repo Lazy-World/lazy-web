@@ -1,7 +1,6 @@
 <#include "security.ftlh">
-<#import "auth.ftlh" as l>
 
-<nav class="navbar navbar-expand-md bg-body-tertiary">
+<nav id='navbar_top' class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Lazy</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,8 +8,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="navbar-nav me-auto mb-2 mb-lg-0">
-                <a class="nav-link active" aria-current="page" href="/">Главная</a>
+            <div class="navbar-nav me-auto mb-2 mb-sm-0">
                 <a class="nav-link" href="/messages">Сообщения</a>
                 <#if isAdmin>
                     <a class="nav-link" href="/user">Список пользователей</a>

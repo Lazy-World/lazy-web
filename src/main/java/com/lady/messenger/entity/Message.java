@@ -39,8 +39,13 @@ public class Message {
         return author != null ? author.getUsername() : "<none>";
     }
 
-    public String getMessageDateTimeString() {
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
+    public String getMessageDateString() {
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return messageDateTime.format(myFormatObj);
+    }
+
+    public String getMessageTimeString() {
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("HH:mm");
         return messageDateTime.format(myFormatObj);
     }
 }

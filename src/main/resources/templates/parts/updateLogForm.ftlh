@@ -1,6 +1,6 @@
 <#macro updForm isLogEdit>
     <div class="text-center">
-        <a class="btn btn-light my-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <a class="btn btn-light mb-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             <#if isLogEdit>
                 Редактировать новость
             <#else>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="col mb-2">
-                <input type="file" name="file" class="form-control ${(fileError??)?string('is-invalid', '')}" aria-label="file example" />
+                <input type="file" name="file" class="form-control ${(fileError??)?string('is-invalid', '')}" aria-label="Загрузка файла" />
                 <#if fileError??>
                     <div class="invalid-feedback">${fileError}</div>
                 </#if>

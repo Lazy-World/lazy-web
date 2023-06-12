@@ -23,10 +23,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Username cannot be empty")
+    @NotBlank(message = "Поле не может быть пустым")
     private String username;
 
-    @NotBlank(message = "Password cannot be empty")
+    @NotBlank(message = "Поле не может быть пустым")
     private String password;
     private boolean active;
 

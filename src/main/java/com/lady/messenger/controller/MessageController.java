@@ -4,6 +4,7 @@ import com.lady.messenger.entity.Message;
 import com.lady.messenger.entity.User;
 import com.lady.messenger.repository.ChatRepository;
 import com.lady.messenger.repository.MessageRepository;
+import com.lady.messenger.service.interfaces.MessageService;
 import com.lady.messenger.service.interfaces.UserService;
 import lombok.val;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,10 +25,13 @@ public class MessageController {
     private final MessageRepository messageRepository;
     private final ChatRepository chatRepository;
 
-    public MessageController(UserService userService, MessageRepository messageRepository, ChatRepository chatRepository) {
+    private final MessageService messageService;
+
+    public MessageController(UserService userService, MessageRepository messageRepository, ChatRepository chatRepository, MessageService messageService) {
         this.userService = userService;
         this.messageRepository = messageRepository;
         this.chatRepository = chatRepository;
+        this.messageService = messageService;
     }
 
     @GetMapping("/messages")
@@ -47,7 +51,8 @@ public class MessageController {
         val chatMembers = Arrays.asList(currentUser, secondUser);
         val chat = userService.getChatWithUsers(chatMembers);
 
-        model.addAttribute("messages", chat.getMessageList());
+        model.addAttribute("messages", messageService.getMessageHistory(chat));
+        model.addAttribute("secondUser", secondUser);
 
         return "messages";
     }

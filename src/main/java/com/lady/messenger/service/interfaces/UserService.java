@@ -15,6 +15,10 @@ public interface UserService {
 
     Chat getChatWithUsers(List<User> users);
 
+    boolean isLoginCorrect(String login);
+
+    boolean isPasswordCorrect(String password);
+
     boolean existsChatWithUsers(List<User> users);
 
     boolean createUser(User user);

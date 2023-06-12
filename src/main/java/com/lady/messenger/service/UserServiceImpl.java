@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         this.chatRepository = chatRepository;
     }
 
-    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
 
@@ -44,22 +43,28 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return user;
     }
 
-    @Override
+    public boolean isLoginCorrect(String login) {
+        String regex = "^[A-Za-z0-9_-]{3,10}$";
+        return login.matches(regex);
+    }
+
+    public boolean isPasswordCorrect(String password) {
+        String regex = "^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9_-]{4,16}$";
+        return password.matches(regex);
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @Override
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    @Override
     public User getUserById(Long id) {
         return userRepository.findUserById(id);
     }
 
-    @Override
     public boolean createUser(User user) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
 
@@ -79,12 +84,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return true;
     }
 
-    @Override
     public boolean existsChatWithUsers(List<User> users) {
         return chatRepository.existsByUsers(users, (long) users.size(), (long) new HashSet<>(users).size());
     }
 
-    @Override
     public Chat getChatWithUsers(List<User> users) {
         if (existsChatWithUsers(users))
             return chatRepository.findByUsers(users, (long) users.size(), (long) new HashSet<>(users).size());
@@ -92,7 +95,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return new Chat(users);
     }
 
-    @Override
     public boolean activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
 
@@ -108,7 +110,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return true;
     }
 
-    @Override
     public void saveUser(User user, String username, Map<String, String> form) {
         user.setUsername(username);
 
@@ -127,7 +128,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         userRepository.save(user);
     }
 
-    @Override
     public void updateUserInfo(User user, String password, String email) {
         String userEmail = user.getEmail();
 
@@ -153,7 +153,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
     }
 
-    @Override
     public void sendEmailToUser(User user) {
         if (!StringUtils.hasLength(user.getEmail())) {
             return;

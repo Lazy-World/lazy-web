@@ -1,0 +1,94 @@
+body {
+    color: #113;
+}
+
+.card-text {
+    white-space: pre-line;
+}
+
+#navbar_top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+.pinned-top {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 9998;
+}
+
+.pinned-bottom {
+    bottom: 0;
+    z-index: 9998;
+}
+
+@media (max-width: 768px){
+    .custom-scrollbar {
+        overflow-y: auto;
+        border: 2px solid #424242;
+        background-color: #222222;
+        top: 0;
+        bottom: 0;
+        height: calc(100vh - 120px - 56px - 70px);
+        min-height: 200px;
+    }
+}
+
+@media (min-width: 769px){
+    .custom-scrollbar {
+        overflow-y: auto;
+        border: 2px solid #424242;
+        background-color: #222222;
+        top: 0;
+        bottom: 0;
+        height: calc(100vh - 120px - 56px);
+        min-height: 200px;
+    }
+}
+
+/* width */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 9px;
+}
+
+/* Track */
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f100;
+}
+
+/* Handle */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #8c8b8b44;
+}
+
+/* Handle on hover */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #56555544;
+}
+
+
+.carousel-image {
+    width: auto;
+    height: 300px;
+    object-fit: contain; /* Опционально: для сохранения пропорций и обрезки изображения */
+}
+
+#messages-container .message {
+    white-space: pre-line;
+    border-radius: 10px;
+    max-width: 60%;
+    padding: 100px 15px;
+    margin-bottom: 10px;
+    background-color: #0B0B0B00;
+}
+
+#messages-container .message.ms-auto {
+    margin-left: auto;
+    background-color: #D5D5D5;
+}
+
+
+

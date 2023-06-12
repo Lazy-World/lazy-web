@@ -76,11 +76,15 @@ public class RegistrationController {
         }
 
         if (!userService.createUser(user)) {
+            model.addAttribute("messageType", "danger");
             model.addAttribute("message", "Пользователь уже существует!");
             return "registration";
         }
 
-        return "redirect:/login";
+        model.addAttribute("messageType", "success");
+        model.addAttribute("message", "Письмо отправлено на вашу почту");
+
+        return "login";
     }
 
     @GetMapping("/activate/{code}")
