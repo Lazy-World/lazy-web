@@ -13,25 +13,24 @@
         <!-- Include custom CSS file after Bootstrap CSS file -->
         <link rel="stylesheet" href="/static/css/theme.css" />
         <link rel="stylesheet" href="/static/css/chat.css" />
+        <link rel="stylesheet" href="/static/css/news.css" />
 
         <!-- Google Font -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" />
 
         <script src="https://www.google.com/recaptcha/api.js" async="async" defer="defer"></script>
     </head>
 
     <body data-bs-theme="dark" class="custom-bg-color">
-    <div class="container">
         <#include "navbar.ftlh">
-
-        <div class="mt-3">
-            <#nested>
+        <div class="container">
+            <div class="mt-3">
+                <#nested>
+            </div>
         </div>
-    </div>
-
-    <!-- Include Bootstrap JavaScript file -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <!-- Include Bootstrap JavaScript file -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     </body>
     </html>
 </#macro>

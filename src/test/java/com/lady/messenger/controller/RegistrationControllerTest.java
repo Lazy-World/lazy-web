@@ -44,8 +44,7 @@ public class RegistrationControllerTest {
                         .param("password2", "test_pass")
                         .param("email", "testuser@example.com")
                         .param("g-recaptcha-response", "test_captcha").with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/login"));
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test
@@ -55,10 +54,10 @@ public class RegistrationControllerTest {
         String activationCode = "test_code";
 
         this.mockMvc.perform(get("/activate/" + activationCode))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("messageType", "success"))
-                .andExpect(model().attribute("message", "User successfully activated"))
-                .andExpect(view().name("login"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login"))
+                .andExpect(flash().attribute("messageType", "success"))
+                .andExpect(flash().attribute("message", "Пользователь успешно подтверждён!"));
     }
 }
 

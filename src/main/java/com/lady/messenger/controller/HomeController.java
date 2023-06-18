@@ -12,14 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 public class HomeController {
@@ -55,18 +51,18 @@ public class HomeController {
     @PostMapping("/")
     public String addUpdateLog(@AuthenticationPrincipal User user, @Valid UpdateLog currentLog,
             BindingResult bindingResult, Model model,
-            @RequestParam(required = false, defaultValue = "") String filter,
-            @RequestParam("file") MultipartFile file
-    ) throws IOException {
-        if (!homeService.isFileValid(file)) {
-            model.addAttribute("currentLog", currentLog);
-            model.addAttribute("fileError", "Пожалуйста, выберите файл");
-            model.addAttribute("updateLogs", homeService.reverseUpdateLogList(
-                    homeService.getUpdateLogsWithFilter(filter))
-            );
-
-            return "home";
-        }
+            @RequestParam(required = false, defaultValue = "") String filter
+//            @RequestParam("file") MultipartFile file
+    ) {
+//        if (!homeService.isFileValid(file)) {
+//            model.addAttribute("currentLog", currentLog);
+//            model.addAttribute("fileError", "Пожалуйста, выберите файл");
+//            model.addAttribute("updateLogs", homeService.reverseUpdateLogList(
+//                    homeService.getUpdateLogsWithFilter(filter))
+//            );
+//
+//            return "home";
+//        }
 
         currentLog.setAuthor(user);
 
@@ -76,7 +72,7 @@ public class HomeController {
             model.addAttribute("errorMap", errorMap);
             model.addAttribute("updateLog", currentLog);
         } else {
-            homeService.uploadFile(currentLog, uploadPath, file);
+//            homeService.uploadFile(currentLog, uploadPath, file);
             updateLogRepository.save(currentLog);
         }
 

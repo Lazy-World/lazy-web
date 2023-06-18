@@ -114,8 +114,8 @@ public class UserControllerTest {
                 .andExpect(redirectedUrl("/user/profile"));
 
         this.mockMvc.perform(get("/activate/" + testUser.getActivationCode()))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("messageType", "success"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(flash().attribute("messageType", "success"));
 
         this.mockMvc.perform(get("/user/profile"))
                 .andExpect(status().isOk())

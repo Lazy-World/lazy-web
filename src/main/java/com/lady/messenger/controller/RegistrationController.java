@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -88,17 +89,18 @@ public class RegistrationController {
     }
 
     @GetMapping("/activate/{code}")
-    public String activateUser(Model model, @PathVariable String code) {
+    public String activateUser(Model model, @PathVariable String code, RedirectAttributes redirectAttributes) {
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {
-            model.addAttribute("messageType", "success");
-            model.addAttribute("message", "Пользователь успешно подтверждён!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            redirectAttributes.addFlashAttribute("message", "Пользователь успешно подтверждён!");
         } else {
-            model.addAttribute("messageType", "danger");
-            model.addAttribute("message", "Код активации не найден");
+            redirectAttributes.addFlashAttribute("messageType", "danger");
+            redirectAttributes.addFlashAttribute("message", "Код активации не найден");
         }
 
-        return "login";
+        return "redirect:/login";
     }
+
 }

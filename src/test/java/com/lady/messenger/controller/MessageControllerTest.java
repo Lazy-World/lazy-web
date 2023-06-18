@@ -33,14 +33,14 @@ public class MessageControllerTest {
     public void testGetChatMessages() throws Exception {
         this.mockMvc.perform(get("/messages"))
                 .andExpect(authenticated())
-                .andExpect(xpath("//div[@id='user-list']/div[@data-id=1]/a").string("Избранное"));
+                .andExpect(xpath("//div[@id='user-container']/div[2]/a/div[2]/h5").string("Избранное"));
     }
 
     @Test
     public void testGetExistingMessageFromChat() throws Exception {
         this.mockMvc.perform(get("/messages").param("sel", "2"))
                 .andExpect(authenticated())
-                .andExpect(xpath("//div[@id='messages-history']/div[1]/div/div/div[1]/div/p").string("cat from dev"));
+                .andExpect(xpath("//div[@id='messages-container']/div[3]/div/div/div/div[1]").string("cat from dev"));
     }
 
     @Test

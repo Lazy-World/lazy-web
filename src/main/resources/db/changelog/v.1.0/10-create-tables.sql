@@ -70,3 +70,6 @@ alter table if exists user_role
     add constraint ci_user_role_user_id
         foreign key (user_id)
             references user_info;;
+
+create sequence hibernate_sequence;;
+alter sequence hibernate_sequence owner to postgres;;

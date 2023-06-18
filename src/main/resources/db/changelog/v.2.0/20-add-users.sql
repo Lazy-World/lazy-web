@@ -9,3 +9,5 @@ VALUES
     (1, 'ADMIN'), (1, 'USER'),
     (2, 'USER'),
     (3, 'USER');
+
+ALTER SEQUENCE hibernate_sequence RESTART WITH 10;

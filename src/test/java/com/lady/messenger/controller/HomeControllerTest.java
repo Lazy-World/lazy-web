@@ -72,17 +72,8 @@ public class HomeControllerTest {
                 .andExpect(authenticated())
                 .andExpect(xpath("//div[@id='update-log-list']/div").nodeCount(5))
                 .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]").exists())
-                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]/div/div/div[2]/div/p").string("NEW CAT CREATED TEXT"))
-                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]/div/div/div[2]/div/h5").string("NEW CAT"));
-
-        File dir = new File("uploads");
-        File[] files = dir.listFiles();
-        assert files != null;
-        for (File file : files) {
-            if (file.getName().matches("^[a-f0-9\\-]+\\.unsafe_test\\.txt$")) {
-                file.delete();
-            }
-        }
+                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]/div/div/p").string("NEW CAT CREATED TEXT"))
+                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=10]/div/div/h5").string("NEW CAT"));
     }
 
     @Test
@@ -99,7 +90,7 @@ public class HomeControllerTest {
         this.mockMvc.perform(get("/"))
                 .andExpect(authenticated())
                 .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=1]").exists())
-                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=1]/div/div/div[2]/div/p").string("FIRST TEXT (Edited)"))
-                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=1]/div/div/div[2]/div/h5").string("CAT1"));
+                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=1]/div/div/p").string("FIRST TEXT (Edited)"))
+                .andExpect(xpath("//div[@id='update-log-list']/div[@data-id=1]/div/div/h5").string("CAT1"));
     }
 }

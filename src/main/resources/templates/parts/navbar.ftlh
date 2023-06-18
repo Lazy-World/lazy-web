@@ -1,6 +1,6 @@
 <#include "security.ftlh">
 
-<nav id='navbar_top' class="navbar navbar-expand-lg bg-body-tertiary">
+<nav id='navbar_top' class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Lazy</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,7 +8,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="navbar-nav me-auto mb-2 mb-sm-0">
+            <div class="navbar-nav me-auto mb-2 mb-sm-0" style="font-size: 16px">
                 <a class="nav-link" href="/messages">Сообщения</a>
                 <#if isAdmin>
                     <a class="nav-link" href="/user">Список пользователей</a>
@@ -16,7 +16,7 @@
             </div>
 
             <form method="get" action="/" class="d-flex" role="search">
-                <input type="text" class="form-control me-2 my-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Заголовок новости" />
+                <input type="text" class="VkIdForm__input me-2 my-2" name="filter" value="${filter!}" aria-label="Search" placeholder="Заголовок новости" />
                 <button class="btn btn-outline-success me-3 my-2" type="submit">Поиск</button>
             </form>
 
