@@ -302,10 +302,10 @@ h2 {
 
 .carousel-image {
     width: auto;
-    height: auto;
+    height: 350px;
 
     min-height: 250px;
-    object-fit: cover; /* Опционально: для сохранения пропорций и обрезки изображения */
+    object-fit: contain; /* Опционально: для сохранения пропорций и обрезки изображения */
 }
 
 #messages-container .message {

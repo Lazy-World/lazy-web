@@ -22,7 +22,7 @@
                     </svg>
                 </div>
 
-                <h2 class="VkIdForm__header">Заходи в Ленивый Мир</h2>
+                <h2 class="VkIdForm__header">Вход в учетную запись</h2>
 
                 <form action="/login" method="post">
                     <div id="login_message"><div class="msg info_msg"><div class="msg_text">Войдите в аккаунт для просмотра страницы.</div></div></div>
