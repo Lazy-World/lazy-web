@@ -11,7 +11,7 @@
         <div class="divider-custom-line"></div>
     </div>
 
-    <div class="text-center mb-3">
+    <div class="text-center mb-4">
         <h5>Инструмент, разработанный для автоматизации процесса загрузки файлов с репозиториев на GitHub и настройки конфигурационных файлов из приложения. С его помощью процесс установки и настройки необходимых файлов значительно упрощается.</h5>
     </div>
 
@@ -46,7 +46,7 @@
     </button>
     </div>
 
-    <div style="font-size: 16px; padding: 20px;">
+    <div style="font-size: 16px; padding: 10px 20px 20px;">
         <h5>Возможности</h5>
         <ol>
             <li style="margin-bottom: 0.3em"><b style="color: #61ad61">Загрузка файлов с GitHub:</b> LazyHub связан с репозиторием на GitHub и позволяет загрузить выбранные пользователем файлы вместе с их конфигурационными файлами.</li>
