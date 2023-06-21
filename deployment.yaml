@@ -5,7 +5,7 @@ metadata:
   labels:
     app: messenger
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: messenger
@@ -16,7 +16,14 @@ spec:
     spec:
       containers:
         - name: messenger
-          image: lazyboo/messenger:v1
+          image: cr.selcloud.ru/lazyweb/messenger
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: messenger-config
+        - name: postgres
+          image: postgres
           ports:
             - containerPort: 80
           envFrom:
