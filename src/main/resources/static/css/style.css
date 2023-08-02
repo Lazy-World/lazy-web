@@ -62,6 +62,26 @@ body {
     outline: none;
 }
 
+.VkIdForm__input_text {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 8px 12px !important;
+    line-height: 20px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    border: 1px solid #ffffff29 !important;
+    text-overflow: ellipsis !important;
+    background-color: #333333 !important;
+    color: #d3cccc !important;
+    resize: vertical !important;
+}
+
+.VkIdForm__input_text:focus {
+    border-color: #adb0b4 !important;
+    outline: none;
+}
+
 .VkIdLogin .page_block {
     width: 320px !important;
     margin: 0 auto !important;

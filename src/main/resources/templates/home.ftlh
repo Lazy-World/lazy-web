@@ -102,20 +102,4 @@
             <div class="text-center mt-3">Новостей пока нет</div>
         </#list>
     </div>
-
-    <script>
-        const textInput = document.querySelector('#my-textarea');
-        const maxRows = 10;
-
-        textInput.addEventListener('input', function() {
-            const lines = this.value.split('\n');
-            if (lines.length > maxRows) {
-                this.rows = maxRows;
-                this.style.overflowY = 'scroll';
-            } else {
-                this.rows = lines.length;
-                this.style.overflowY = 'hidden';
-            }
-        });
-    </script>
 </@c.page>

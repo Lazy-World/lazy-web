@@ -52,18 +52,7 @@ public class HomeController {
     public String addUpdateLog(@AuthenticationPrincipal User user, @Valid UpdateLog currentLog,
             BindingResult bindingResult, Model model,
             @RequestParam(required = false, defaultValue = "") String filter
-//            @RequestParam("file") MultipartFile file
     ) {
-//        if (!homeService.isFileValid(file)) {
-//            model.addAttribute("currentLog", currentLog);
-//            model.addAttribute("fileError", "Пожалуйста, выберите файл");
-//            model.addAttribute("updateLogs", homeService.reverseUpdateLogList(
-//                    homeService.getUpdateLogsWithFilter(filter))
-//            );
-//
-//            return "home";
-//        }
-
         currentLog.setAuthor(user);
 
         if (bindingResult.hasErrors()) {

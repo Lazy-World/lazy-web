@@ -10,7 +10,7 @@
         </div>
 
         <div class="col mb-1">
-            <textarea id="my-textarea" type="text" name="text" class="VkIdForm__input ${((errorMap['textError'])??)?string('is-invalid', '')}" placeholder="Текст новости..."><#if currentLog??>${currentLog.text}</#if></textarea>
+            <textarea id="my-textarea" type="text" name="text" class="VkIdForm__input_text ${((errorMap['textError'])??)?string('is-invalid', '')}" placeholder="Текст новости..."><#if currentLog??>${currentLog.text}</#if></textarea>
             <#if (errorMap['textError'])??>
                 <div class="invalid-feedback">
                     ${(errorMap['textError'])!''}

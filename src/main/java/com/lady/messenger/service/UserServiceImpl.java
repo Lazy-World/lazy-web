@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 "Добро пожаловать в Lazy World.\n" +
                 "Для подтверждения почты перейдите по ссылке:\n \n" +
 
-                "http://localhost:8081/activate/%s",
+                "http://localhost:3000/activate/%s",
                 user.getUsername(),
                 user.getActivationCode()
         );
